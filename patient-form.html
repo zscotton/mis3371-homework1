@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>We'R'Docs Medical — Patient Registration</title>
+  <link href="style.css" rel="stylesheet">
+  <script>
+    // inline JS for dynamic day/date in the banner
+    document.addEventListener('DOMContentLoaded', function() {
+      var now = new Date();
+      var opts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+      document.getElementById('today-date').textContent = now.toLocaleDateString(undefined, opts);
+    });
+  </script>
+  <!--
+  Program name: patient-form.html
+  Author: Zach Scotton
+  Date created: 2025-09-24
+  Date last edited: 2025-09-24
+  Version: 1.0
+  Description: Patient Registration Form for MIS3371 Homework 1
+  -->
+</head>
+<body>
+  <div id="banner">
+    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo" />
+    <div class="title">We'R'Docs Medical — Patient Registration</div>
+    <div class="date">today is: <span id="today-date"></span></div>
+  </div>
+
+  <div class="container">
+    <h1>Patient Registration</h1>
+    <p><em>Fields with * are required.</em></p>
+
+    <form action="thankyou.html">
+      <table>
+        <tr>
+          <td class="label">Name *</td>
+          <td class="input">
+            <input class="inline" type="text" name="first_name" placeholder="First Name" maxlength="30" required>
+            <input class="inline mi" type="text" name="middle_initial" placeholder="M.I." maxlength="1" pattern="[A-Za-z]">
+            <input class="inline" type="text" name="last_name" placeholder="Last Name" maxlength="30" required>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Date of Birth *</td>
+          <td class="input">
+            <input type="text" name="dob" placeholder="MM/DD/YYYY"
+              pattern="^(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])/(19|20)\d{2}$" required>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Social Security</td>
+          <td class="input">
+            <input type="password" name="ssn" placeholder="***-**-1234"
+              pattern="^(\*{3}-\*{2}-\d{4}|\d{3}-\d{2}-\d{4}|\d{9,11})$">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Address *</td>
+          <td class="input">
+            <input class="inline" type="text" name="address1" placeholder="Address Line 1" maxlength="30" required>
+            <input class="inline" type="text" name="address2" placeholder="Address Line 2" maxlength="30">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">City / State / ZIP *</td>
+          <td class="input">
+            <input class="inline" type="text" name="city" placeholder="City" maxlength="30" required>
+            <select class="inline small" name="state" required>
+              <option value="">State</option>
+              <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+              <option>CO</option><option>CT</option><option>DE</option><option>DC</option><option>FL</option>
+              <option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option>
+              <option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option>
+              <option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+              <option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option>
+              <option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option>
+              <option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option>
+              <option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+              <option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+              <option>PR</option>
+            </select>
+            <input class="inline small" type="text" name="zip" placeholder="ZIP" maxlength="10"
+              pattern="^\d{5}(-\d{4})?$" required>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Email *</td>
+          <td class="input"><input type="email" name="email" placeholder="name@domain.tld" required></td>
+        </tr>
+
+        <tr>
+          <td class="label">Phone</td>
+          <td class="input"><input type="text" name="phone" placeholder="(###) ###-####"
+            pattern="^\(\d{3}\) \d{3}-\d{4}$"></td>
+        </tr>
+
+        <tr>
+          <td class="label">Gender</td>
+          <td class="input">
+            <label><input type="radio" name="gender" value="Male"> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+            <label><input type="radio" name="gender" value="Other"> Other</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Vaccinated?</td>
+          <td class="input">
+            <label><input type="radio" name="vaccinated" value="Y"> Yes</label>
+            <label><input type="radio" name="vaccinated" value="N"> No</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Insurance?</td>
+          <td class="input">
+            <label><input type="radio" name="insurance" value="Y"> Yes</label>
+            <label><input type="radio" name="insurance" value="N"> No</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Pre-existing Conditions</td>
+          <td class="input">
+            <fieldset>
+              <legend>Check all that apply</legend>
+              <label><input type="checkbox" name="conditions" value="Chickenpox"> Chickenpox</label>
+              <label><input type="checkbox" name="conditions" value="Measles"> Measles</label>
+              <label><input type="checkbox" name="conditions" value="COVID-19"> COVID-19</label>
+              <label><input type="checkbox" name="conditions" value="Tetanus"> Tetanus</label>
+              <label><input type="checkbox" name="conditions" value="Smallpox"> Smallpox</label>
+            </fieldset>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">Current Symptoms</td>
+          <td class="input"><textarea name="symptoms" rows="3" cols="50" placeholder="Describe current symptoms..."></textarea></td>
+        </tr>
+
+        <tr>
+          <td class="label">Health (1–10)</td>
+          <td class="input"><input type="range" name="health_score" min="1" max="10" value="5"></td>
+        </tr>
+
+        <tr>
+          <td class="label">User ID *</td>
+          <td class="input"><input type="text" name="user_id" maxlength="20" placeholder="Desired username"
+            pattern="^[A-Za-z0-9_]+$" required></td>
+        </tr>
+
+        <tr>
+          <td class="label">Password *</td>
+          <td class="input">
+            <input class="inline" type="password" id="pwd" name="password" maxlength="64" required>
+            <input class="inline" type="password" id="pwd2" name="password_confirm" maxlength="64" required>
+          </td>
+        </tr>
+      </table>
+
+      <div class="buttons">
+        <input type="reset" value="CLEAR AND START OVER">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+
+  <div id="footer">
+    <div><strong>We'R'Docs Medical</strong><br>PO BOX 18881 • Sugar Land, TX 77496</div>
+    <a class="contact-btn" href="mailto:info@example.com">Contact Us</a>
+    <div>
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
+      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter/X</a>
+    </div>
+  </div>
+
+  <!-- End of document: Homework 1 -->
+  <script>
+  // simple check to ensure passwords match before going to thankyou.html
+  document.querySelector('form').addEventListener('submit', function(e) {
+    var p1 = document.getElementById('pwd').value;
+    var p2 = document.getElementById('pwd2').value;
+    if (p1 !== p2) {
+      e.preventDefault();
+      alert('Passwords do not match.');
+    }
+  });
+  </script>
+</body>
+</html>

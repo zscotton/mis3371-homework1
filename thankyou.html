@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You — We'R'Docs Medical</title>
+  <link href="style.css" rel="stylesheet">
+  <!--
+  Program name: thankyou.html
+  Author: Zach Scotton
+  Date created: 2025-09-24
+  Date last edited: 2025-09-24
+  Version: 1.0
+  Description: Thank-you page for MIS3371 Homework 1
+  -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var now = new Date();
+      var opts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+      document.getElementById('today-date').textContent = now.toLocaleDateString(undefined, opts);
+    });
+  </script>
+</head>
+<body>
+  <div id="banner">
+    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo" />
+    <div class="title">We'R'Docs Medical — Patient Registration</div>
+    <div class="date">today is: <span id="today-date"></span></div>
+  </div>
+
+  <div class="container">
+    <h1>Thank you for your submission.</h1>
+    <p>Your registration information has been received (client-side demo).</p>
+    <p><a href="patient-form.html">Back to the form</a></p>
+  </div>
+
+  <div id="footer">
+    <div><strong>We'R'Docs Medical</strong><br>PO BOX 18881 • Sugar Land, TX 77496</div>
+    <a class="contact-btn" href="mailto:info@example.com">Contact Us</a>
+    <div>
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
+      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter/X</a>
+    </div>
+  </div>
+</body>
+</html>
