@@ -14,7 +14,6 @@
   <title>We'R'Docs Medical — Patient Registration</title>
   <link href="style.css" rel="stylesheet">
   <script>
-    // inline JS for dynamic day/date in the banner
     document.addEventListener('DOMContentLoaded', function() {
       var now = new Date();
       var opts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
@@ -182,9 +181,8 @@
     </div>
   </div>
 
-  <!-- End of document: Homework 1 -->
+  <!-- End of Homework 1 -->
   <script>
-  // simple check to ensure passwords match before going to thankyou.html
   document.querySelector('form').addEventListener('submit', function(e) {
     var p1 = document.getElementById('pwd').value;
     var p2 = document.getElementById('pwd2').value;
