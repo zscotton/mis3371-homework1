@@ -82,10 +82,10 @@ pattern="[0-9\-]{9,11}"
             <td><label for="phone">Phone</label></td>
             <td colspan="3">
               <input id="phone" name="phone" type="tel" required
-       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-       inputmode="numeric"
-       title="Use 000-000-0000 format"
+       pattern="^\s*\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\s*$"
+       title="Enter 10 digits: 123-456-7890 ((), spaces, dots, or dashes ok)"
        placeholder="000-000-0000">
+
 
             </td>
           </tr>
