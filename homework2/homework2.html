@@ -33,19 +33,19 @@
         <table class="form-table">
           <!-- Block 1: Name + DOB -->
           <tr>
-            <td><label for="firstName">First Name</label></td>
-            <td>
-              <input id="firstName" name="firstName" type="text" maxlength="30" required
-                     pattern="[A-Za-z'\\-]{1,30}"
-                     title="1–30 letters, apostrophes, or dashes." placeholder="First"/>
-            </td>
-            <td style="width:6rem"><label for="mi">MI</label></td>
-            <td>
-              <input id="mi" name="mi" type="text" maxlength="1"
-                     pattern="[A-Za-z]?" title="One letter (A–Z). Leave blank if none."
-                     placeholder="M"/>
-            </td>
-          </tr>
+  <td><label for="firstName">First Name</label></td>
+  <td>
+    <input id="firstName" name="firstName" type="text" maxlength="30" required
+           pattern="[A-Za-z'\-]{1,30}"
+           title="1–30 letters, apostrophes, or dashes." placeholder="First"/>
+  </td>
+  <td><label for="mi">MI</label></td>
+  <td>
+    <input id="mi" name="mi" type="text" maxlength="1"
+           pattern="[A-Za-z]?" title="Middle initial (A–Z only)." />
+  </td>
+</tr>
+
           <tr>
             <td><label for="lastName">Last Name</label></td>
             <td colspan="3">
