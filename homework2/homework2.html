@@ -82,8 +82,11 @@ pattern="[0-9\-]{9,11}"
             <td><label for="phone">Phone</label></td>
             <td colspan="3">
               <input id="phone" name="phone" type="tel" required
-                     pattern="\\d{3}-\\d{3}-\\d{4}"
-                     title="Format: 000-000-0000" placeholder="000-000-0000"/>
+       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+       inputmode="numeric"
+       title="Use 000-000-0000 format"
+       placeholder="000-000-0000">
+
             </td>
           </tr>
 
