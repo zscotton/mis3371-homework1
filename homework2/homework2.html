@@ -64,7 +64,7 @@
             <td><label for="ssn">Patient ID (masked)</label></td>
             <td>
               <input id="ssn" name="ssn" type="password" maxlength="11"
-                     pattern="\\d{3}-?\\d{2}-?\\d{4}"
+pattern="[0-9\-]{9,11}"
                      title="Use 9 digits (###-##-#### allowed)."/>
             </td>
           </tr>
