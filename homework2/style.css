@@ -1,0 +1,109 @@
+/*
+  style.css — HW2
+  Author: Zach Scotton
+  Description: basic styles for banner, form table, buttons, and footer
+*/
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f3f7fb;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Banner ===== */
+.banner {
+  background-color: #005f99;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+}
+.banner .logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+.banner .title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.banner .date {
+  margin-left: auto;
+  font-size: 1rem;
+}
+
+/* ===== Layout ===== */
+.container {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.form-table {
+  width: 100%;
+  border-spacing: 8px;
+}
+.form-table td:first-child {
+  width: 160px;
+  font-weight: bold;
+}
+
+/* ===== Inputs ===== */
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #005f99;
+  outline: none;
+}
+
+/* ===== Buttons ===== */
+button, .contact-btn {
+  background-color: #005f99;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover, .contact-btn:hover {
+  background-color: #004266;
+}
+button[type="reset"] {
+  background-color: #ccc;
+  color: #000;
+}
+
+/* ===== Review panel ===== */
+.review-panel {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+}
+
+/* ===== Footer ===== */
+#footer {
+  background: #ffffff;
+  border-top: 1px solid #ccc;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+#footer a {
+  color: #005f99;
+  text-decoration: none;
+  margin: 0 5px;
+}
+#footer a:hover {
+  text-decoration: underline;
+}
