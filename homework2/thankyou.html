@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We'R'Docs Medical — Thank You</title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Banner -->
+  <div id="banner" class="banner">
+    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo" />
+    <div class="title">We'R'Docs Medical — Patient Registration</div>
+    <div class="date">today is: <span id="today-date"></span></div>
+  </div>
+
+  <!-- Main message -->
+  <main style="padding: 40px; text-align: center;">
+    <h1>Thank you for your submission!</h1>
+    <p>Your information has been received.</p>
+    <p><a href="homework2.html">← Back to form</a></p>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer">
+    <div><strong>We'R'Docs Medical</strong><br>PO BOX 18881 • Sugar Land, TX 77496</div>
+    <a class="contact-btn" href="mailto:info@example.com">Contact Us</a>
+    <div>
+      <a href="https://facebook.com" target="_blank">Facebook</a> | 
+      <a href="https://twitter.com" target="_blank">Twitter/X</a>
+    </div>
+  </div>
+
+  <!-- show date as MM/DD -->
+  <script>
+    (function () {
+      const el = document.getElementById("today-date");
+      if (!el) return;
+      const s = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+      el.textContent = s; // e.g. 10/16
+    })();
+  </script>
+</body>
+</html>
