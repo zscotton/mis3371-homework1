@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>We'R'Docs Medical — Homework 3 Patient Registration</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="homework3.js" defer></script>
+</head>
+<body>
+<!--
+Program name: homework3.html
+Author: Zach Scotton
+Date created: 2025-11-10
+Date last edited: 2025-11-10
+Version: 3.0
+Description: Homework 3 – Patient registration form with on-the-fly JavaScript validation.
+-->
+
+<div id="page-wrapper">
+
+    <!-- HEADER / BANNER -->
+    <div id="header">
+        <img src="../images/werdocs-logo.png" alt="We'R'Docs Medical Logo" id="logo">
+        <div class="header-text">
+            <h1>We'R'Docs Medical — Patient Registration</h1>
+            <p>today is: <span id="currentDate"></span></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- MAIN CONTENT -->
+    <div id="content">
+        <h2>Patient Registration (HW3)</h2>
+        <p>Please fill out all required fields. Hints are shown when you hover over each field.</p>
+
+        <form id="patientForm" action="thankyou.html" novalidate>
+            <table class="form-table">
+
+                <!-- Block 1: Name + DOB + Patient ID -->
+                <tr>
+                    <th colspan="3" class="section-header">Patient Information</th>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="firstName">First Name*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="firstName" name="firstName" maxlength="30"
+                               title="1–30 characters. Letters, apostrophes, and dashes only."
+                        >
+                        <br><span class="error" id="firstNameError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="middleInitial">Middle Initial</label>
+                    </td>
+                    <td>
+                        <input type="text" id="middleInitial" name="middleInitial" maxlength="1"
+                               title="Optional. One letter only, no numbers."
+                        >
+                        <br><span class="error" id="middleInitialError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="lastName">Last Name*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="lastName" name="lastName" maxlength="30"
+                               title="1–30 characters. Letters, apostrophes, and dashes only."
+                        >
+                        <br><span class="error" id="lastNameError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="dob">Date of Birth* (MM/DD/YYYY)</label>
+                    </td>
+                    <td>
+                        <input type="text" id="dob" name="dob"
+                               title="Enter date as MM/DD/YYYY. Cannot be in the future or more than 120 years ago.">
+                        <br><span class="error" id="dobError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="patientId">Patient ID* (9 digits)</label>
+                    </td>
+                    <td>
+                        <input type="password" id="patientId" name="patientId" maxlength="9"
+                               title="9 digits only. Do not use your real SSN.">
+                        <br><span class="error" id="patientIdError"></span>
+                    </td>
+                </tr>
+
+                <!-- Block 2: Contact Info -->
+                <tr>
+                    <th colspan="3" class="section-header">Contact Information</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="email">Email Address*</label>
+                    </td>
+                    <td>
+                        <input type="email" id="email" name="email"
+                               title="Format: name@domain.tld. Will be forced to lowercase.">
+                        <br><span class="error" id="emailError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="phone">Phone Number*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="phone" name="phone" maxlength="12"
+                               title="Format: 000-000-0000. Digits only; dashes auto-inserted.">
+                        <br><span class="error" id="phoneError"></span>
+                    </td>
+                </tr>
+
+                <!-- Block 3: Address -->
+                <tr>
+                    <th colspan="3" class="section-header">Address</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="address1">Address Line 1*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="address1" name="address1" maxlength="30"
+                               title="Required, 2–30 characters.">
+                        <br><span class="error" id="address1Error"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="address2">Address Line 2</label>
+                    </td>
+                    <td>
+                        <input type="text" id="address2" name="address2" maxlength="30"
+                               title="Optional, but if entered must be 2–30 characters.">
+                        <br><span class="error" id="address2Error"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="city">City*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="city" name="city" maxlength="30"
+                               title="Required, 2–30 characters.">
+                        <br><span class="error" id="cityError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="state">State*</label>
+                    </td>
+                    <td>
+                        <select id="state" name="state"
+                                title="Select your 2-letter state code.">
+                            <option value="">-- Select State --</option>
+                            <option value="AL">AL</option><option value="AK">AK</option>
+                            <option value="AZ">AZ</option><option value="AR">AR</option>
+                            <option value="CA">CA</option><option value="CO">CO</option>
+                            <option value="CT">CT</option><option value="DE">DE</option>
+                            <option value="DC">DC</option><option value="FL">FL</option>
+                            <option value="GA">GA</option><option value="HI">HI</option>
+                            <option value="ID">ID</option><option value="IL">IL</option>
+                            <option value="IN">IN</option><option value="IA">IA</option>
+                            <option value="KS">KS</option><option value="KY">KY</option>
+                            <option value="LA">LA</option><option value="ME">ME</option>
+                            <option value="MD">MD</option><option value="MA">MA</option>
+                            <option value="MI">MI</option><option value="MN">MN</option>
+                            <option value="MS">MS</option><option value="MO">MO</option>
+                            <option value="MT">MT</option><option value="NE">NE</option>
+                            <option value="NV">NV</option><option value="NH">NH</option>
+                            <option value="NJ">NJ</option><option value="NM">NM</option>
+                            <option value="NY">NY</option><option value="NC">NC</option>
+                            <option value="ND">ND</option><option value="OH">OH</option>
+                            <option value="OK">OK</option><option value="OR">OR</option>
+                            <option value="PA">PA</option><option value="PR">PR</option>
+                            <option value="RI">RI</option><option value="SC">SC</option>
+                            <option value="SD">SD</option><option value="TN">TN</option>
+                            <option value="TX">TX</option><option value="UT">UT</option>
+                            <option value="VT">VT</option><option value="VA">VA</option>
+                            <option value="WA">WA</option><option value="WV">WV</option>
+                            <option value="WI">WI</option><option value="WY">WY</option>
+                        </select>
+                        <br><span class="error" id="stateError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="zip">ZIP Code*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="zip" name="zip" maxlength="5"
+                               title="Required, exactly 5 digits.">
+                        <br><span class="error" id="zipError"></span>
+                    </td>
+                </tr>
+
+                <!-- Block 4: Choices -->
+                <tr>
+                    <th colspan="3" class="section-header">Medical History</th>
+                </tr>
+
+                <tr>
+                    <td>Conditions</td>
+                    <td>
+                        <label><input type="checkbox" name="conditions" value="Chicken Pox"> Chicken Pox</label>
+                        <label><input type="checkbox" name="conditions" value="Measles"> Measles</label>
+                        <label><input type="checkbox" name="conditions" value="Mumps"> Mumps</label>
+                        <label><input type="checkbox" name="conditions" value="Covid-19"> Covid-19</label>
+                        <label><input type="checkbox" name="conditions" value="Tetanus"> Tetanus</label>
+                        <br><span class="error" id="conditionsError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Gender</td>
+                    <td>
+                        <label><input type="radio" name="gender" value="Male"> Male</label>
+                        <label><input type="radio" name="gender" value="Female"> Female</label>
+                        <label><input type="radio" name="gender" value="Other"> Other</label>
+                        <br><span class="error" id="genderError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Vaccinated?</td>
+                    <td>
+                        <label><input type="radio" name="vaccinated" value="Yes"> Yes</label>
+                        <label><input type="radio" name="vaccinated" value="No"> No</label>
+                        <label><input type="radio" name="vaccinated" value="Unsure"> Unsure</label>
+                        <br><span class="error" id="vaccinatedError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Insurance?</td>
+                    <td>
+                        <label><input type="radio" name="insurance" value="Yes"> Yes</label>
+                        <label><input type="radio" name="insurance" value="No"> No</label>
+                        <label><input type="radio" name="insurance" value="Unsure"> Unsure</label>
+                        <br><span class="error" id="insuranceError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="salaryRange">Desired Salary</label>
+                    </td>
+                    <td>
+                        <input type="range" id="salaryRange" name="salaryRange"
+                               min="20000" max="200000" step="5000"
+                               title="Slide to choose your desired salary range.">
+                        <span id="salaryValue">$20,000</span>
+                        <br><span class="error" id="salaryError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="symptoms">Describe Your Symptoms</label>
+                    </td>
+                    <td>
+                        <textarea id="symptoms" name="symptoms" rows="4" cols="50"
+                                  title="Optional. Avoid using double quotes (&quot;)."></textarea>
+                        <br><span class="error" id="symptomsError"></span>
+                    </td>
+                </tr>
+
+                <!-- Block 5: Login Info -->
+                <tr>
+                    <th colspan="3" class="section-header">Login Credentials</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="userId">Desired User ID*</label>
+                    </td>
+                    <td>
+                        <input type="text" id="userId" name="userId" maxlength="20"
+                               title="5–20 chars, cannot start with a number. Letters, digits, dash, underscore. Will be forced to lowercase.">
+                        <br><span class="error" id="userIdError"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="password1">Password*</label>
+                    </td>
+                    <td>
+                        <input type="password" id="password1" name="password1" maxlength="30"
+                               title="At least 8 characters, with at least 1 upper, 1 lower, and 1 digit. Cannot match User ID.">
+                        <br><span class="error" id="password1Error"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="password2">Confirm Password*</label>
+                    </td>
+                    <td>
+                        <input type="password" id="password2" name="password2" maxlength="30"
+                               title="Must exactly match the first password.">
+                        <br><span class="error" id="password2Error"></span>
+                    </td>
+                </tr>
+
+                <!-- Buttons -->
+                <tr>
+                    <td></td>
+                    <td class="button-row">
+                        <button type="reset" id="resetBtn">Clear and Start Over</button>
+                        <button type="button" id="reviewBtn">Review</button>
+                        <button type="button" id="validateBtn">Validate</button>
+                        <button type="submit" id="submitBtn" disabled hidden>Submit</button>
+                        <span id="formStatus" class="status-message"></span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <!-- REVIEW AREA -->
+        <h3>Review Your Information</h3>
+        <p>Click <strong>Review</strong> to see a summary of what you entered.</p>
+        <div id="reviewArea"></div>
+
+    </div> <!-- end content -->
+
+    <!-- FOOTER -->
+    <div id="footer">
+        <p>We'R'Docs Medical &nbsp;|&nbsp; PO BOX 18881 • Sugar Land, TX 77496</p>
+        <button onclick="window.location.href='mailto:info@werdocs.example';">Contact Us</button>
+        <p>
+            <a href="https://facebook.com" target="_blank">Facebook</a> |
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+        </p>
+    </div>
+
+</div> <!-- end page-wrapper -->
+
+<!--
+End of homework3.html
+-->
+</body>
+</html>
+
