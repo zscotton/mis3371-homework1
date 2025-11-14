@@ -1,357 +1,401 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>We'R'Docs Medical — Patient Registration Form</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="homework3.js" defer></script>
-</head>
-<body>
-<!--
-Program name: homework3.html
+/*
+Program name: style.css
 Author: Zach Scotton
 Date created: 2025-11-10
 Date last edited: 2025-11-14
 Version: 3.0
-Description: Homework 3 – Patient registration form with on-the-fly JavaScript validation.
-             All fields validate dynamically as user enters data. Submit button only appears
-             after successful validation via the Validate button.
--->
+Description: External stylesheet for MIS3371 Homework 3 Patient Registration Form
+*/
 
-<div id="page-wrapper">
+/* ========== BODY & PAGE WRAPPER ========== */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e8f0f7;
+    color: #2c3e50;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
 
-    <!-- ========== HEADER / BANNER ========== -->
-    <div id="header">
-        <img src="werdocs-logo.png" alt="We'R'Docs Medical Logo" id="logo">
-        <div class="header-text">
-            <h1>We'R'Docs Medical</h1>
-            <p>today is: <span id="currentDate"></span></p>
-        </div>
-    </div>
+#page-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-    <hr>
+/* ========== HEADER / BANNER ========== */
+#header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #ffffff;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid #ff6b35;
+}
 
-    <!-- ========== MAIN CONTENT ========== -->
-    <div id="content">
-        <h2>Patient Registration Form (Homework 3)</h2>
-        <p>Please complete all required fields marked with <strong>*</strong>. Hover over fields for hints. All validation happens as you type!</p>
+#logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 5px;
+}
 
-        <form id="patientForm" action="thankyou.html" method="get" novalidate>
-            <table class="form-table">
+.header-text {
+    flex: 1;
+    margin-left: 20px;
+}
 
-                <!-- ========== BLOCK 1: PATIENT INFORMATION ========== -->
-                <tr>
-                    <th colspan="2" class="section-header">Patient Information</th>
-                </tr>
-                
-                <tr>
-                    <td><label for="firstName">First Name*</label></td>
-                    <td>
-                        <input type="text" id="firstName" name="firstName" 
-                               maxlength="30" required
-                               title="Enter 1-30 characters. Only letters, apostrophes, and dashes allowed."
-                               pattern="[A-Za-z'-]{1,30}">
-                        <br><span class="error" id="firstNameError"></span>
-                    </td>
-                </tr>
+.header-text h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #ffffff;
+    font-weight: 600;
+}
 
-                <tr>
-                    <td><label for="middleInitial">Middle Initial</label></td>
-                    <td>
-                        <input type="text" id="middleInitial" name="middleInitial" 
-                               maxlength="1"
-                               title="Optional. Enter one letter only."
-                               pattern="[A-Za-z]">
-                        <br><span class="error" id="middleInitialError"></span>
-                    </td>
-                </tr>
+.header-text p {
+    margin: 5px 0 0 0;
+    font-size: 1rem;
+    color: #e0e0e0;
+    font-weight: 500;
+}
 
-                <tr>
-                    <td><label for="lastName">Last Name*</label></td>
-                    <td>
-                        <input type="text" id="lastName" name="lastName" 
-                               maxlength="30" required
-                               title="Enter 1-30 characters. Only letters, apostrophes, and dashes allowed."
-                               pattern="[A-Za-z'-]{1,30}">
-                        <br><span class="error" id="lastNameError"></span>
-                    </td>
-                </tr>
+/* ========== MAIN CONTENT AREA ========== */
+#content {
+    padding: 30px 40px;
+}
 
-                <tr>
-                    <td><label for="dob">Date of Birth* (MM/DD/YYYY)</label></td>
-                    <td>
-                        <input type="text" id="dob" name="dob" 
-                               placeholder="MM/DD/YYYY" required
-                               title="Enter date as MM/DD/YYYY. Cannot be in future or more than 120 years ago."
-                               pattern="(0[1-9]|1[0-2])/(0[1-9]|[12]\d|3[01])/(19|20)\d{2}">
-                        <br><span class="error" id="dobError"></span>
-                    </td>
-                </tr>
+#content h2 {
+    color: #1e3c72;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #ff6b35;
+    padding-bottom: 8px;
+}
 
-                <tr>
-                    <td><label for="patientId">Patient ID* (9 digits)</label></td>
-                    <td>
-                        <input type="password" id="patientId" name="patientId" 
-                               maxlength="9" required
-                               title="Enter 9 digits only. Field is obscured for privacy. Do not use real SSN."
-                               pattern="\d{9}">
-                        <br><span class="error" id="patientIdError"></span>
-                    </td>
-                </tr>
+#content h3 {
+    color: #2a5298;
+    font-size: 1.3rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
 
-                <!-- ========== BLOCK 2: CONTACT INFORMATION ========== -->
-                <tr>
-                    <th colspan="2" class="section-header">Contact Information</th>
-                </tr>
+hr {
+    border: none;
+    border-top: 2px solid #ff6b35;
+    margin: 0;
+}
 
-                <tr>
-                    <td><label for="email">Email Address*</label></td>
-                    <td>
-                        <input type="email" id="email" name="email" required
-                               placeholder="name@domain.tld"
-                               title="Enter valid email in format name@domain.tld. Will be forced to lowercase.">
-                        <br><span class="error" id="emailError"></span>
-                    </td>
-                </tr>
+/* ========== FORM TABLE LAYOUT ========== */
+.form-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
 
-                <tr>
-                    <td><label for="phone">Phone Number*</label></td>
-                    <td>
-                        <input type="text" id="phone" name="phone" 
-                               maxlength="12" required
-                               placeholder="000-000-0000"
-                               title="Enter 10 digits. Dashes will be added automatically."
-                               pattern="\d{3}-\d{3}-\d{4}">
-                        <br><span class="error" id="phoneError"></span>
-                    </td>
-                </tr>
+.form-table td {
+    padding: 12px 8px;
+    vertical-align: top;
+}
 
-                <!-- ========== BLOCK 3: ADDRESS ========== -->
-                <tr>
-                    <th colspan="2" class="section-header">Address</th>
-                </tr>
+.form-table td:first-child {
+    width: 200px;
+    font-weight: 600;
+    color: #34495e;
+    padding-right: 15px;
+}
 
-                <tr>
-                    <td><label for="address1">Address Line 1*</label></td>
-                    <td>
-                        <input type="text" id="address1" name="address1" 
-                               maxlength="30" required
-                               title="Enter street address, 2-30 characters.">
-                        <br><span class="error" id="address1Error"></span>
-                    </td>
-                </tr>
+.section-header {
+    background: linear-gradient(90deg, #2a5298 0%, #3d6bb3 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 15px !important;
+    text-align: left;
+    border-radius: 4px;
+}
 
-                <tr>
-                    <td><label for="address2">Address Line 2</label></td>
-                    <td>
-                        <input type="text" id="address2" name="address2" 
-                               maxlength="30"
-                               title="Optional. Enter apartment, suite, etc. If used, must be 2-30 characters.">
-                        <br><span class="error" id="address2Error"></span>
-                    </td>
-                </tr>
+/* ========== FORM INPUTS ========== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 12px;
+    border: 2px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
 
-                <tr>
-                    <td><label for="city">City*</label></td>
-                    <td>
-                        <input type="text" id="city" name="city" 
-                               maxlength="30" required
-                               title="Enter city name, 2-30 characters.">
-                        <br><span class="error" id="cityError"></span>
-                    </td>
-                </tr>
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2a5298;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
 
-                <tr>
-                    <td><label for="state">State*</label></td>
-                    <td>
-                        <select id="state" name="state" required
-                                title="Select your state from the dropdown.">
-                            <option value="">-- Select State --</option>
-                            <option value="AL">AL</option><option value="AK">AK</option>
-                            <option value="AZ">AZ</option><option value="AR">AR</option>
-                            <option value="CA">CA</option><option value="CO">CO</option>
-                            <option value="CT">CT</option><option value="DE">DE</option>
-                            <option value="DC">DC</option><option value="FL">FL</option>
-                            <option value="GA">GA</option><option value="HI">HI</option>
-                            <option value="ID">ID</option><option value="IL">IL</option>
-                            <option value="IN">IN</option><option value="IA">IA</option>
-                            <option value="KS">KS</option><option value="KY">KY</option>
-                            <option value="LA">LA</option><option value="ME">ME</option>
-                            <option value="MD">MD</option><option value="MA">MA</option>
-                            <option value="MI">MI</option><option value="MN">MN</option>
-                            <option value="MS">MS</option><option value="MO">MO</option>
-                            <option value="MT">MT</option><option value="NE">NE</option>
-                            <option value="NV">NV</option><option value="NH">NH</option>
-                            <option value="NJ">NJ</option><option value="NM">NM</option>
-                            <option value="NY">NY</option><option value="NC">NC</option>
-                            <option value="ND">ND</option><option value="OH">OH</option>
-                            <option value="OK">OK</option><option value="OR">OR</option>
-                            <option value="PA">PA</option><option value="PR">PR</option>
-                            <option value="RI">RI</option><option value="SC">SC</option>
-                            <option value="SD">SD</option><option value="TN">TN</option>
-                            <option value="TX">TX</option><option value="UT">UT</option>
-                            <option value="VT">VT</option><option value="VA">VA</option>
-                            <option value="WA">WA</option><option value="WV">WV</option>
-                            <option value="WI">WI</option><option value="WY">WY</option>
-                        </select>
-                        <br><span class="error" id="stateError"></span>
-                    </td>
-                </tr>
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
 
-                <tr>
-                    <td><label for="zip">ZIP Code*</label></td>
-                    <td>
-                        <input type="text" id="zip" name="zip" 
-                               maxlength="5" required
-                               placeholder="00000"
-                               title="Enter 5-digit ZIP code."
-                               pattern="\d{5}">
-                        <br><span class="error" id="zipError"></span>
-                    </td>
-                </tr>
+select {
+    cursor: pointer;
+    background-color: #ffffff;
+}
 
-                <!-- ========== BLOCK 4: MEDICAL HISTORY ========== -->
-                <tr>
-                    <th colspan="2" class="section-header">Medical History</th>
-                </tr>
+/* ========== CHECKBOXES & RADIO BUTTONS ========== */
+input[type="checkbox"],
+input[type="radio"] {
+    margin-right: 6px;
+    cursor: pointer;
+}
 
-                <tr>
-                    <td>Previous Conditions</td>
-                    <td>
-                        <label><input type="checkbox" name="conditions" value="Chicken Pox"> Chicken Pox</label><br>
-                        <label><input type="checkbox" name="conditions" value="Measles"> Measles</label><br>
-                        <label><input type="checkbox" name="conditions" value="Mumps"> Mumps</label><br>
-                        <label><input type="checkbox" name="conditions" value="Covid-19"> Covid-19</label><br>
-                        <label><input type="checkbox" name="conditions" value="Tetanus"> Tetanus</label>
-                        <br><span class="error" id="conditionsError"></span>
-                    </td>
-                </tr>
+label {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    user-select: none;
+}
 
-                <tr>
-                    <td>Gender*</td>
-                    <td>
-                        <label><input type="radio" name="gender" value="Male" required> Male</label>
-                        <label><input type="radio" name="gender" value="Female"> Female</label>
-                        <label><input type="radio" name="gender" value="Other"> Other</label>
-                        <br><span class="error" id="genderError"></span>
-                    </td>
-                </tr>
+/* ========== RANGE SLIDER ========== */
+input[type="range"] {
+    width: 300px;
+    margin-right: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
 
-                <tr>
-                    <td>Have you been vaccinated?*</td>
-                    <td>
-                        <label><input type="radio" name="vaccinated" value="Yes" required> Yes</label>
-                        <label><input type="radio" name="vaccinated" value="No"> No</label>
-                        <label><input type="radio" name="vaccinated" value="Unsure"> Unsure</label>
-                        <br><span class="error" id="vaccinatedError"></span>
-                    </td>
-                </tr>
+#salaryValue {
+    display: inline-block;
+    min-width: 80px;
+    font-weight: 700;
+    color: #2a5298;
+    font-size: 1.1rem;
+}
 
-                <tr>
-                    <td>Do you have insurance?*</td>
-                    <td>
-                        <label><input type="radio" name="insurance" value="Yes" required> Yes</label>
-                        <label><input type="radio" name="insurance" value="No"> No</label>
-                        <label><input type="radio" name="insurance" value="Unsure"> Unsure</label>
-                        <br><span class="error" id="insuranceError"></span>
-                    </td>
-                </tr>
+/* ========== ERROR MESSAGES ========== */
+.error {
+    display: inline-block;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 4px;
+    min-height: 20px;
+}
 
-                <tr>
-                    <td><label for="salaryRange">Desired Salary Range</label></td>
-                    <td>
-                        <input type="range" id="salaryRange" name="salaryRange"
-                               min="20000" max="200000" step="5000" value="20000"
-                               title="Slide to select your desired salary between $20,000 and $200,000.">
-                        <span id="salaryValue">$20,000</span>
-                        <br><span class="error" id="salaryError"></span>
-                    </td>
-                </tr>
+.error:empty::before {
+    content: "\00a0";
+}
 
-                <tr>
-                    <td><label for="symptoms">Describe Your Current Symptoms</label></td>
-                    <td>
-                        <textarea id="symptoms" name="symptoms" 
-                                  rows="4" cols="50"
-                                  title="Optional. Please describe any current symptoms or concerns. Avoid using double quotes."></textarea>
-                        <br><span class="error" id="symptomsError"></span>
-                    </td>
-                </tr>
+/* ========== BUTTONS ========== */
+.button-row {
+    text-align: right;
+    padding-top: 20px;
+}
 
-                <!-- ========== BLOCK 5: LOGIN CREDENTIALS ========== -->
-                <tr>
-                    <th colspan="2" class="section-header">Create Login Credentials</th>
-                </tr>
+button,
+input[type="submit"],
+input[type="reset"] {
+    padding: 12px 24px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-                <tr>
-                    <td><label for="userId">Desired User ID*</label></td>
-                    <td>
-                        <input type="text" id="userId" name="userId" 
-                               maxlength="20" required
-                               title="5-20 characters. Must start with a letter. Only letters, digits, dash, and underscore allowed. Will be forced to lowercase."
-                               pattern="[a-zA-Z][a-zA-Z0-9_-]{4,19}">
-                        <br><span class="error" id="userIdError"></span>
-                    </td>
-                </tr>
+button[type="reset"],
+input[type="reset"] {
+    background-color: #95a5a6;
+    color: #ffffff;
+}
 
-                <tr>
-                    <td><label for="password1">Password*</label></td>
-                    <td>
-                        <input type="password" id="password1" name="password1" 
-                               maxlength="30" required
-                               title="8-30 characters. Must include at least 1 uppercase letter, 1 lowercase letter, and 1 digit. Cannot match User ID.">
-                        <br><span class="error" id="password1Error"></span>
-                    </td>
-                </tr>
+button[type="reset"]:hover,
+input[type="reset"]:hover {
+    background-color: #7f8c8d;
+}
 
-                <tr>
-                    <td><label for="password2">Confirm Password*</label></td>
-                    <td>
-                        <input type="password" id="password2" name="password2" 
-                               maxlength="30" required
-                               title="Re-enter your password. Must exactly match the password above.">
-                        <br><span class="error" id="password2Error"></span>
-                    </td>
-                </tr>
+#reviewBtn {
+    background-color: #3498db;
+    color: #ffffff;
+}
 
-                <!-- ========== BUTTONS ========== -->
-                <tr>
-                    <td colspan="2" class="button-row">
-                        <button type="reset" id="resetBtn">Clear and Start Over</button>
-                        <button type="button" id="reviewBtn">Review</button>
-                        <button type="button" id="validateBtn">Validate</button>
-                        <button type="submit" id="submitBtn" disabled hidden>Submit</button>
-                        <span id="formStatus"></span>
-                    </td>
-                </tr>
-            </table>
-        </form>
+#reviewBtn:hover {
+    background-color: #2980b9;
+}
 
-        <!-- ========== REVIEW AREA ========== -->
-        <h3>Review Your Information</h3>
-        <p>Click the <strong>Review</strong> button above to see a summary of all entered information before validating.</p>
-        <div id="reviewArea"></div>
+#validateBtn {
+    background-color: #f39c12;
+    color: #ffffff;
+}
 
-    </div> <!-- end content -->
+#validateBtn:hover {
+    background-color: #e67e22;
+}
 
-    <!-- ========== FOOTER ========== -->
-    <div id="footer">
-        <p><strong>We'R'Docs Medical</strong></p>
-        <p>PO BOX 18881 • Sugar Land, TX 77496</p>
-        <button onclick="window.location.href='mailto:info@werdocsmedical.com';">Contact Us</button>
-        <p>
-            <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
-            <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a> |
-            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
-        </p>
-    </div>
+#submitBtn {
+    background-color: #27ae60;
+    color: #ffffff;
+}
 
-</div> <!-- end page-wrapper -->
+#submitBtn:hover {
+    background-color: #229954;
+}
 
-<!--
-End of homework3.html
-Zach Scotton | MIS3371 | Fall 2025
--->
-</body>
-</html>
+#submitBtn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* ========== STATUS MESSAGES ========== */
+.status-message {
+    display: inline-block;
+    margin-left: 15px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-message.error-global {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ========== REVIEW AREA ========== */
+#reviewArea {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    min-height: 50px;
+}
+
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.review-table th {
+    background: linear-gradient(90deg, #2a5298 0%, #3d6bb3 100%);
+    color: #ffffff;
+    padding: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.review-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.review-table td:first-child {
+    font-weight: 700;
+    color: #495057;
+    width: 200px;
+    background-color: #f8f9fa;
+}
+
+.review-table td:last-child {
+    color: #212529;
+}
+
+.review-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ========== FOOTER ========== */
+#footer {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: #ecf0f1;
+    padding: 25px 40px;
+    text-align: center;
+    border-top: 4px solid #ff6b35;
+}
+
+#footer p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+}
+
+#footer button {
+    background-color: #ff6b35;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
+#footer button:hover {
+    background-color: #e55a28;
+}
+
+#footer a {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+#footer a:visited {
+    color: #9b59b6;
+}
+
+#footer a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    #header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .header-text {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    #content {
+        padding: 20px 15px;
+    }
+    
+    .form-table td:first-child {
+        width: auto;
+        display: block;
+        padding-bottom: 5px;
+    }
+    
+    .form-table td:last-child {
+        display: block;
+    }
+    
+    input[type="range"] {
+        width: 200px;
+    }
+}
