@@ -2,11 +2,13 @@
 Program name: homework3.js
 Author: Zach Scotton
 Date created: 2025-11-10
-Date last edited: 2025-11-10
-Version: 3.0
+Date last edited: 2025-11-14
+Version: 3.1
 Description: JavaScript validation and review logic for Homework 3 patient registration form.
+             All validations run on-the-fly (oninput, onblur, onchange) and before submit.
 */
 
+// Initialize everything when page loads
 document.addEventListener("DOMContentLoaded", () => {
     setCurrentDate();
     initSlider();
@@ -18,24 +20,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (validateBtn) validateBtn.addEventListener("click", validateForm);
     if (reviewBtn) reviewBtn.addEventListener("click", reviewData);
-    if (resetBtn) resetBtn.addEventListener("click", () => {
-        clearAllErrors();
-        setSubmitEnabled(false);
-        document.getElementById("formStatus").textContent = "";
-        document.getElementById("reviewArea").innerHTML = "";
-    });
+    if (resetBtn) resetBtn.addEventListener("click", handleReset);
 });
 
-
-
+/* ========== DATE DISPLAY ========== */
 function setCurrentDate() {
     const todaySpan = document.getElementById("currentDate");
     if (!todaySpan) return;
+    
     const today = new Date();
-    const options = { weekday: "long", month: "short", day: "numeric", year: "numeric" };
-    todaySpan.textContent = today.toLocaleDateString(undefined, options);
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    const dayName = days[today.getDay()];
+    const monthName = months[today.getMonth()];
+    const day = today.getDate();
+    const year = today.getFullYear();
+    
+    // Add ordinal suffix (st, nd, rd, th)
+    let suffix = "th";
+    if (day === 1 || day === 21 || day === 31) suffix = "st";
+    else if (day === 2 || day === 22) suffix = "nd";
+    else if (day === 3 || day === 23) suffix = "rd";
+    
+    todaySpan.textContent = `${dayName}, ${monthName} ${day}${suffix}, ${year}`;
 }
 
+/* ========== SLIDER INITIALIZATION ========== */
 function initSlider() {
     const slider = document.getElementById("salaryRange");
     const output = document.getElementById("salaryValue");
@@ -50,11 +61,11 @@ function initSlider() {
     });
 }
 
+/* ========== ERROR DISPLAY HELPERS ========== */
 function showError(fieldId, message) {
     const span = document.getElementById(fieldId + "Error");
     if (span) {
         span.textContent = message;
-        span.style.display = "inline";
     }
 }
 
@@ -62,7 +73,6 @@ function clearError(fieldId) {
     const span = document.getElementById(fieldId + "Error");
     if (span) {
         span.textContent = "";
-        span.style.display = "inline-block"; // keeps space reserved
     }
 }
 
@@ -70,7 +80,6 @@ function clearAllErrors() {
     const errorSpans = document.querySelectorAll(".error");
     errorSpans.forEach((span) => {
         span.textContent = "";
-        span.style.display = "inline-block";
     });
 }
 
@@ -87,7 +96,14 @@ function setSubmitEnabled(ok) {
     }
 }
 
-/* ---------- Per-field validation functions ---------- */
+function handleReset() {
+    clearAllErrors();
+    setSubmitEnabled(false);
+    document.getElementById("formStatus").textContent = "";
+    document.getElementById("reviewArea").innerHTML = "";
+}
+
+/* ========== FIELD VALIDATION FUNCTIONS ========== */
 
 function validateFirstName() {
     const input = document.getElementById("firstName");
@@ -99,7 +115,7 @@ function validateFirstName() {
         return false;
     }
     if (!pattern.test(value)) {
-        showError("firstName", "1–30 letters, apostrophes, and dashes only.");
+        showError("firstName", "Only letters, apostrophes, and dashes allowed (1-30 chars).");
         return false;
     }
     clearError("firstName");
@@ -109,13 +125,15 @@ function validateFirstName() {
 function validateMiddleInitial() {
     const input = document.getElementById("middleInitial");
     const value = input.value.trim();
+    
     if (value === "") {
         clearError("middleInitial");
-        return true; // optional
+        return true; // Optional field
     }
+    
     const pattern = /^[A-Za-z]$/;
     if (!pattern.test(value)) {
-        showError("middleInitial", "Middle initial must be a single letter.");
+        showError("middleInitial", "Must be a single letter.");
         return false;
     }
     clearError("middleInitial");
@@ -132,7 +150,7 @@ function validateLastName() {
         return false;
     }
     if (!pattern.test(value)) {
-        showError("lastName", "1–30 letters, apostrophes, and dashes only.");
+        showError("lastName", "Only letters, apostrophes, and dashes allowed (1-30 chars).");
         return false;
     }
     clearError("lastName");
@@ -142,21 +160,25 @@ function validateLastName() {
 function validateDob() {
     const input = document.getElementById("dob");
     const value = input.value.trim();
+    
+    // Check format MM/DD/YYYY
     const pattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(19|20)\d{2}$/;
 
     if (!value) {
         showError("dob", "Date of birth is required.");
         return false;
     }
+    
     if (!pattern.test(value)) {
         showError("dob", "Use MM/DD/YYYY format.");
         return false;
     }
 
+    // Parse and validate the date
     const [month, day, year] = value.split("/").map((p) => parseInt(p, 10));
     const dobDate = new Date(year, month - 1, day);
 
-    // Check that date object matches entered values (catches invalid like 02/31)
+    // Check that date is valid (catches things like 02/31/2025)
     if (
         dobDate.getFullYear() !== year ||
         dobDate.getMonth() !== month - 1 ||
@@ -166,21 +188,21 @@ function validateDob() {
         return false;
     }
 
+    // Check date is not in future
     const today = new Date();
-    const maxAgeYears = 120;
-    const oldestAllowed = new Date(
-        today.getFullYear() - maxAgeYears,
-        today.getMonth(),
-        today.getDate()
-    );
-
+    today.setHours(0, 0, 0, 0);
+    
     if (dobDate > today) {
         showError("dob", "Date of birth cannot be in the future.");
         return false;
     }
 
-    if (dobDate < oldestAllowed) {
-        showError("dob", `Date of birth cannot be more than ${maxAgeYears} years ago.`);
+    // Check date is not more than 120 years ago
+    const maxAgeDate = new Date();
+    maxAgeDate.setFullYear(maxAgeDate.getFullYear() - 120);
+    
+    if (dobDate < maxAgeDate) {
+        showError("dob", "Date of birth cannot be more than 120 years ago.");
         return false;
     }
 
@@ -191,16 +213,27 @@ function validateDob() {
 function validatePatientId() {
     const input = document.getElementById("patientId");
     let value = input.value;
-    // Only digits allowed
-    value = value.replace(/\D/g, "");
+    
+    // Strip all non-digits
+    let digits = value.replace(/\D/g, "");
+    
+    // Auto-format as 000-00-0000 (SSN style)
+    if (digits.length > 3 && digits.length <= 5) {
+        value = digits.slice(0, 3) + "-" + digits.slice(3);
+    } else if (digits.length > 5) {
+        value = digits.slice(0, 3) + "-" + digits.slice(3, 5) + "-" + digits.slice(5, 9);
+    } else {
+        value = digits;
+    }
+    
     input.value = value;
 
-    if (!value) {
+    if (!digits) {
         showError("patientId", "Patient ID is required.");
         return false;
     }
-    if (value.length !== 9) {
-        showError("patientId", "Patient ID must be exactly 9 digits.");
+    if (digits.length !== 9) {
+        showError("patientId", "Must be exactly 9 digits (format: 000-00-0000).");
         return false;
     }
     clearError("patientId");
@@ -210,6 +243,8 @@ function validatePatientId() {
 function validateEmail() {
     const input = document.getElementById("email");
     let value = input.value.trim();
+    
+    // Force lowercase
     value = value.toLowerCase();
     input.value = value;
 
@@ -218,9 +253,10 @@ function validateEmail() {
         return false;
     }
 
+    // Basic email pattern
     const pattern = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
     if (!pattern.test(value)) {
-        showError("email", "Invalid email format. Use name@domain.tld.");
+        showError("email", "Invalid email format (use name@domain.tld).");
         return false;
     }
 
@@ -230,23 +266,28 @@ function validateEmail() {
 
 function validatePhone() {
     const input = document.getElementById("phone");
-    let value = input.value.replace(/\D/g, "");
+    let value = input.value;
+    
+    // Strip all non-digits
+    let digits = value.replace(/\D/g, "");
 
     // Auto-format as 000-000-0000
-    if (value.length > 3 && value.length <= 6) {
-        value = value.slice(0, 3) + "-" + value.slice(3);
-    } else if (value.length > 6) {
-        value = value.slice(0, 3) + "-" + value.slice(3, 6) + "-" + value.slice(6, 10);
+    if (digits.length > 3 && digits.length <= 6) {
+        value = digits.slice(0, 3) + "-" + digits.slice(3);
+    } else if (digits.length > 6) {
+        value = digits.slice(0, 3) + "-" + digits.slice(3, 6) + "-" + digits.slice(6, 10);
+    } else {
+        value = digits;
     }
+    
     input.value = value;
 
-    const digits = value.replace(/\D/g, "");
     if (!digits) {
         showError("phone", "Phone number is required.");
         return false;
     }
     if (digits.length !== 10) {
-        showError("phone", "Phone must be 10 digits (format 000-000-0000).");
+        showError("phone", "Phone must be 10 digits (format: 000-000-0000).");
         return false;
     }
 
@@ -263,7 +304,7 @@ function validateAddress1() {
         return false;
     }
     if (value.length < 2 || value.length > 30) {
-        showError("address1", "Address line 1 must be 2–30 characters.");
+        showError("address1", "Must be 2-30 characters.");
         return false;
     }
     clearError("address1");
@@ -274,12 +315,14 @@ function validateAddress2() {
     const input = document.getElementById("address2");
     const value = input.value.trim();
 
+    // Optional field
     if (!value) {
         clearError("address2");
-        return true; // optional
+        return true;
     }
+    
     if (value.length < 2 || value.length > 30) {
-        showError("address2", "If used, Address line 2 must be 2–30 characters.");
+        showError("address2", "If used, must be 2-30 characters.");
         return false;
     }
     clearError("address2");
@@ -295,7 +338,7 @@ function validateCity() {
         return false;
     }
     if (value.length < 2 || value.length > 30) {
-        showError("city", "City must be 2–30 characters.");
+        showError("city", "Must be 2-30 characters.");
         return false;
     }
     clearError("city");
@@ -316,7 +359,10 @@ function validateState() {
 
 function validateZip() {
     const input = document.getElementById("zip");
-    let value = input.value.replace(/\D/g, "");
+    let value = input.value;
+    
+    // Strip non-digits
+    value = value.replace(/\D/g, "");
     input.value = value;
 
     if (!value) {
@@ -324,7 +370,7 @@ function validateZip() {
         return false;
     }
     if (value.length !== 5) {
-        showError("zip", "ZIP code must be exactly 5 digits.");
+        showError("zip", "Must be exactly 5 digits.");
         return false;
     }
     clearError("zip");
@@ -333,7 +379,10 @@ function validateZip() {
 
 function validateUserId() {
     const input = document.getElementById("userId");
-    let value = input.value.trim().toLowerCase();
+    let value = input.value.trim();
+    
+    // Force lowercase
+    value = value.toLowerCase();
     input.value = value;
 
     if (!value) {
@@ -341,13 +390,10 @@ function validateUserId() {
         return false;
     }
 
-    // 5–20 chars, first not a digit, allowed letters/digits/_/-
-    const pattern = /^[A-Za-z][A-Za-z0-9_-]{4,19}$/;
+    // Must start with letter, 5-20 chars, only letters/digits/dash/underscore
+    const pattern = /^[a-z][a-z0-9_-]{4,19}$/;
     if (!pattern.test(value)) {
-        showError(
-            "userId",
-            "5–20 chars, cannot start with a number. Letters, digits, dash, underscore only."
-        );
+        showError("userId", "5-20 chars, must start with letter. Only letters, digits, dash, underscore.");
         return false;
     }
 
@@ -366,17 +412,15 @@ function validatePasswords() {
 
     let ok = true;
 
+    // Validate password1
     if (!p1) {
         showError("password1", "Password is required.");
         ok = false;
     } else {
-        // At least 8 chars, with upper, lower, and digit
+        // Must be 8-30 chars with at least 1 uppercase, 1 lowercase, 1 digit
         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,30}$/;
         if (!pattern.test(p1)) {
-            showError(
-                "password1",
-                "8–30 chars, must include 1 upper, 1 lower, and 1 digit."
-            );
+            showError("password1", "8-30 chars, must include 1 uppercase, 1 lowercase, and 1 digit.");
             ok = false;
         } else if (userId && p1.toLowerCase().includes(userId)) {
             showError("password1", "Password cannot contain your User ID.");
@@ -386,6 +430,7 @@ function validatePasswords() {
         }
     }
 
+    // Validate password2
     if (!p2) {
         showError("password2", "Please confirm your password.");
         ok = false;
@@ -400,8 +445,7 @@ function validatePasswords() {
 }
 
 function validateConditions() {
-    const checked = document.querySelectorAll('input[name="conditions"]:checked');
-    // not required to have at least one; just clear any old error
+    // Checkboxes are optional - just clear any error
     clearError("conditions");
     return true;
 }
@@ -409,7 +453,7 @@ function validateConditions() {
 function validateRadios(groupName, errorId, label) {
     const checked = document.querySelector(`input[name="${groupName}"]:checked`);
     if (!checked) {
-        showError(errorId, `Please choose a value for ${label}.`);
+        showError(errorId, `Please select ${label}.`);
         return false;
     }
     clearError(errorId);
@@ -420,49 +464,65 @@ function validateSymptoms() {
     const input = document.getElementById("symptoms");
     const value = input.value;
 
-    // Optional, but we can prevent double quotes if you like
+    // Optional field, but check for double quotes
     if (value.includes('"')) {
-        showError("symptoms", 'Please avoid using double quotes (").');
+        showError("symptoms", 'Please avoid double quotes (").');
         return false;
     }
     clearError("symptoms");
     return true;
 }
 
-/* ---------- Attach on-the-fly validation ---------- */
+/* ========== ATTACH ON-THE-FLY VALIDATION ========== */
 
 function attachFieldEvents() {
-    const fields = [
+    // Text inputs - validate on input (as they type)
+    const inputFields = [
         ["firstName", "input", validateFirstName],
         ["middleInitial", "input", validateMiddleInitial],
         ["lastName", "input", validateLastName],
-        ["dob", "blur", validateDob],
         ["patientId", "input", validatePatientId],
-        ["email", "blur", validateEmail],
         ["phone", "input", validatePhone],
-        ["address1", "blur", validateAddress1],
-        ["address2", "blur", validateAddress2],
-        ["city", "blur", validateCity],
-        ["state", "change", validateState],
         ["zip", "input", validateZip],
         ["userId", "input", validateUserId],
         ["password1", "input", validatePasswords],
-        ["password2", "input", validatePasswords],
+        ["password2", "input", validatePasswords]
+    ];
+
+    // Blur validation for fields that need complete entry
+    const blurFields = [
+        ["dob", "blur", validateDob],
+        ["email", "blur", validateEmail],
+        ["address1", "blur", validateAddress1],
+        ["address2", "blur", validateAddress2],
+        ["city", "blur", validateCity],
         ["symptoms", "blur", validateSymptoms]
     ];
 
-    fields.forEach(([id, evt, fn]) => {
+    // Combine and attach
+    [...inputFields, ...blurFields].forEach(([id, evt, fn]) => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener(evt, () => {
                 fn();
-                setSubmitEnabled(false); // any edit invalidates previous validation
+                // Any field change invalidates previous validation
+                setSubmitEnabled(false);
                 document.getElementById("formStatus").textContent = "";
             });
         }
     });
 
-    // Radios and checkboxes – on change
+    // State dropdown
+    const stateEl = document.getElementById("state");
+    if (stateEl) {
+        stateEl.addEventListener("change", () => {
+            validateState();
+            setSubmitEnabled(false);
+            document.getElementById("formStatus").textContent = "";
+        });
+    }
+
+    // Radio buttons
     ["gender", "vaccinated", "insurance"].forEach((name) => {
         const nodes = document.querySelectorAll(`input[name="${name}"]`);
         nodes.forEach((n) =>
@@ -474,6 +534,7 @@ function attachFieldEvents() {
         );
     });
 
+    // Checkboxes
     const condNodes = document.querySelectorAll('input[name="conditions"]');
     condNodes.forEach((n) =>
         n.addEventListener("change", () => {
@@ -484,58 +545,59 @@ function attachFieldEvents() {
     );
 }
 
-/* ---------- Validate button handler ---------- */
+/* ========== VALIDATE BUTTON - FULL FORM VALIDATION ========== */
 
 function validateForm() {
     clearAllErrors();
     setSubmitEnabled(false);
 
-    let ok = true;
+    let allValid = true;
 
-    if (!validateFirstName()) ok = false;
-    if (!validateMiddleInitial()) ok = false;
-    if (!validateLastName()) ok = false;
-    if (!validateDob()) ok = false;
-    if (!validatePatientId()) ok = false;
+    // Validate each field
+    if (!validateFirstName()) allValid = false;
+    if (!validateMiddleInitial()) allValid = false;
+    if (!validateLastName()) allValid = false;
+    if (!validateDob()) allValid = false;
+    if (!validatePatientId()) allValid = false;
 
-    if (!validateEmail()) ok = false;
-    if (!validatePhone()) ok = false;
+    if (!validateEmail()) allValid = false;
+    if (!validatePhone()) allValid = false;
 
-    if (!validateAddress1()) ok = false;
-    if (!validateAddress2()) ok = false;
-    if (!validateCity()) ok = false;
-    if (!validateState()) ok = false;
-    if (!validateZip()) ok = false;
+    if (!validateAddress1()) allValid = false;
+    if (!validateAddress2()) allValid = false;
+    if (!validateCity()) allValid = false;
+    if (!validateState()) allValid = false;
+    if (!validateZip()) allValid = false;
 
-    if (!validateConditions()) ok = false;
-    if (!validateRadios("gender", "genderError", "Gender")) ok = false;
-    if (!validateRadios("vaccinated", "vaccinatedError", "Vaccinated")) ok = false;
-    if (!validateRadios("insurance", "insuranceError", "Insurance")) ok = false;
+    if (!validateConditions()) allValid = false;
+    if (!validateRadios("gender", "genderError", "Gender")) allValid = false;
+    if (!validateRadios("vaccinated", "vaccinatedError", "Vaccinated")) allValid = false;
+    if (!validateRadios("insurance", "insuranceError", "Insurance")) allValid = false;
 
-    if (!validateUserId()) ok = false;
-    if (!validatePasswords()) ok = false;
+    if (!validateUserId()) allValid = false;
+    if (!validatePasswords()) allValid = false;
 
-    if (!validateSymptoms()) ok = false;
+    if (!validateSymptoms()) allValid = false;
 
     const status = document.getElementById("formStatus");
 
-    if (ok) {
+    if (allValid) {
         setSubmitEnabled(true);
         if (status) {
-            status.textContent = "All fields look good. You may now submit the form.";
+            status.textContent = "✓ All fields validated! You may submit.";
             status.className = "status-message success";
         }
     } else {
         if (status) {
-            status.textContent = "Please fix the highlighted errors before submitting.";
+            status.textContent = "✗ Please fix errors before submitting.";
             status.className = "status-message error-global";
         }
     }
 
-    return ok;
+    return allValid;
 }
 
-/* ---------- Review button handler ---------- */
+/* ========== REVIEW BUTTON - DISPLAY ALL DATA ========== */
 
 function reviewData() {
     const output = document.getElementById("reviewArea");
@@ -543,7 +605,7 @@ function reviewData() {
 
     const getRadio = (name) => {
         const checked = document.querySelector(`input[name="${name}"]:checked`);
-        return checked ? checked.value : "(none)";
+        return checked ? checked.value : "(none selected)";
     };
 
     const getCheckboxes = (name) => {
@@ -559,6 +621,7 @@ function reviewData() {
         middleInitial: form.middleInitial.value.trim(),
         lastName: form.lastName.value.trim(),
         dob: form.dob.value.trim(),
+        patientId: form.patientId.value.trim(),
         email: form.email.value.trim(),
         phone: form.phone.value.trim(),
         address1: form.address1.value.trim(),
@@ -573,30 +636,35 @@ function reviewData() {
         salary: document.getElementById("salaryValue").textContent,
         symptoms: form.symptoms.value.trim(),
         userId: form.userId.value.trim()
-        // password deliberately not displayed
     };
 
     output.innerHTML = `
         <table class="review-table">
             <tr><th colspan="2">PLEASE REVIEW THIS INFORMATION</th></tr>
-            <tr><td>First, MI, Last Name</td><td>${data.firstName} ${data.middleInitial} ${data.lastName}</td></tr>
-            <tr><td>Date of Birth</td><td>${data.dob}</td></tr>
-            <tr><td>Email</td><td>${data.email}</td></tr>
-            <tr><td>Phone</td><td>${data.phone}</td></tr>
+            <tr><td>Name</td><td>${data.firstName} ${data.middleInitial} ${data.lastName}</td></tr>
+            <tr><td>Date of Birth</td><td>${data.dob || "(not entered)"}</td></tr>
+            <tr><td>Patient ID</td><td>${data.patientId ? "***-**-" + data.patientId.slice(-4) : "(not entered)"}</td></tr>
+            <tr><td>Email</td><td>${data.email || "(not entered)"}</td></tr>
+            <tr><td>Phone</td><td>${data.phone || "(not entered)"}</td></tr>
             <tr><td>Address</td>
                 <td>
-                    ${data.address1}<br>
+                    ${data.address1 || "(not entered)"}<br>
                     ${data.address2 ? data.address2 + "<br>" : ""}
-                    ${data.city}, ${data.state} ${data.zip}
+                    ${data.city || "(city)"}, ${data.state || "(state)"} ${data.zip || "(zip)"}
                 </td>
             </tr>
+            <tr><th colspan="2">MEDICAL HISTORY</th></tr>
             <tr><td>Conditions</td><td>${data.conditions}</td></tr>
             <tr><td>Gender</td><td>${data.gender}</td></tr>
             <tr><td>Vaccinated?</td><td>${data.vaccinated}</td></tr>
             <tr><td>Insurance?</td><td>${data.insurance}</td></tr>
             <tr><td>Desired Salary</td><td>${data.salary}</td></tr>
-            <tr><td>Described Symptoms</td><td>${data.symptoms || "(none)"} </td></tr>
-            <tr><td>User ID</td><td>${data.userId}</td></tr>
+            <tr><td>Symptoms</td><td>${data.symptoms || "(none provided)"}</td></tr>
+            <tr><th colspan="2">LOGIN CREDENTIALS</th></tr>
+            <tr><td>User ID</td><td>${data.userId || "(not entered)"}</td></tr>
+            <tr><td>Password</td><td>••••••••</td></tr>
         </table>
     `;
 }
+
+/* ========== END OF FILE ========== */
