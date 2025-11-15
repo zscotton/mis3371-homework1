@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>We'R'Docs Medical — Thank You</title>
+    <title>Thank You — We'R'Docs Medical</title>
     <link rel="stylesheet" href="style.css">
-    <!-- If your homework3.js sets the date in the banner, you can reuse it here -->
-    <script src="homework3.js" defer></script>
+    <script>
+        // Display current date in header
+        document.addEventListener("DOMContentLoaded", () => {
+            const todaySpan = document.getElementById("currentDate");
+            if (!todaySpan) return;
+            
+            const today = new Date();
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            
+            const dayName = days[today.getDay()];
+            const monthName = months[today.getMonth()];
+            const day = today.getDate();
+            const year = today.getFullYear();
+            
+            // Add ordinal suffix
+            let suffix = "th";
+            if (day === 1 || day === 21 || day === 31) suffix = "st";
+            else if (day === 2 || day === 22) suffix = "nd";
+            else if (day === 3 || day === 23) suffix = "rd";
+            
+            todaySpan.textContent = `${dayName}, ${monthName} ${day}${suffix}, ${year}`;
+        });
+    </script>
 </head>
 <body>
 <!--
@@ -14,8 +36,8 @@ Program name: thankyou.html
 Author: Zach Scotton
 Date created: 2025-11-10
 Date last edited: 2025-11-14
-Version: 1.0
-Description: Thank-you page for Homework 3 patient registration form.
+Version: 3.0
+Description: Thank you page after successful patient registration form submission.
 -->
 
 <div id="page-wrapper">
@@ -32,43 +54,65 @@ Description: Thank-you page for Homework 3 patient registration form.
     <hr>
 
     <!-- ========== MAIN CONTENT ========== -->
-    <div id="content">
-        <h2>Thank You for Your Submission</h2>
-        <p>
-            Your patient registration form has been successfully submitted to
-            <strong>We'R'Docs Medical</strong>.
-        </p>
-        <p>
-            Our staff will review your information and contact you soon using the
-            phone number or email address you provided. If you need to make any
-            changes, please return to the registration form and submit an updated
-            version.
-        </p>
+    <div id="content" style="text-align: center; padding: 60px 40px;">
+        <h2 style="color: #27ae60; font-size: 2.2rem; margin-bottom: 20px;">
+            ✓ Registration Successful!
+        </h2>
+        
+        <div style="background-color: #d4edda; border: 2px solid #c3e6cb; border-radius: 8px; padding: 30px; margin: 30px auto; max-width: 600px;">
+            <p style="font-size: 1.2rem; color: #155724; margin: 0 0 15px 0;">
+                <strong>Thank you for registering with We'R'Docs Medical!</strong>
+            </p>
+            <p style="font-size: 1rem; color: #155724; margin: 0;">
+                Your patient registration has been successfully submitted. 
+                A member of our team will contact you shortly to confirm your appointment 
+                and answer any questions you may have.
+            </p>
+        </div>
 
-        <h3>What Happens Next?</h3>
-        <ul>
-            <li>We verify your contact and insurance information.</li>
-            <li>We prepare your chart before your first appointment.</li>
-            <li>We may reach out if we need any additional details.</li>
-        </ul>
+        <div style="margin-top: 40px;">
+            <h3 style="color: #2a5298; font-size: 1.4rem; margin-bottom: 15px;">What Happens Next?</h3>
+            <ul style="text-align: left; max-width: 600px; margin: 0 auto; line-height: 1.8;">
+                <li>Our administrative staff will review your registration</li>
+                <li>You will receive a confirmation email within 24 hours</li>
+                <li>We'll contact you to schedule your first appointment</li>
+                <li>Please bring a valid photo ID and insurance card to your visit</li>
+            </ul>
+        </div>
 
-        <p>
-            If you have any urgent questions, feel free to click the
-            <strong>Contact Us</strong> button in the footer to email our office.
-        </p>
+        <div style="margin-top: 50px;">
+            <button onclick="window.location.href='homework3.html'" 
+                    style="background-color: #2a5298; color: white; padding: 15px 30px; 
+                           border: none; border-radius: 6px; font-size: 1.1rem; 
+                           font-weight: 600; cursor: pointer; margin-right: 15px;
+                           transition: background-color 0.3s;">
+                ← Return to Registration Form
+            </button>
+            
+            <button onclick="window.location.href='mailto:info@werdocsmedical.com'" 
+                    style="background-color: #ff6b35; color: white; padding: 15px 30px; 
+                           border: none; border-radius: 6px; font-size: 1.1rem; 
+                           font-weight: 600; cursor: pointer;
+                           transition: background-color 0.3s;">
+                Contact Us
+            </button>
+        </div>
 
-        <p>
-            <a href="homework3.html">&larr; Go back to the registration form</a>
-        </p>
+        <div style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <p style="font-size: 0.95rem; color: #495057; margin: 0;">
+                <strong>Need immediate assistance?</strong><br>
+                Call us at: <a href="tel:+17137437523" style="color: #2a5298; font-weight: 600;">(713) 743-7523</a><br>
+                Monday - Friday: 8:00 AM - 6:00 PM<br>
+                Saturday: 9:00 AM - 1:00 PM
+            </p>
+        </div>
     </div>
 
     <!-- ========== FOOTER ========== -->
     <div id="footer">
         <p><strong>We'R'Docs Medical</strong></p>
         <p>PO BOX 18881 • Sugar Land, TX 77496</p>
-        <button onclick="window.location.href='mailto:info@werdocsmedical.com';">
-            Contact Us
-        </button>
+        <button onclick="window.location.href='mailto:info@werdocsmedical.com';">Contact Us</button>
         <p>
             <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
             <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a> |
