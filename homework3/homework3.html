@@ -93,9 +93,10 @@ Description: Homework 3 – Patient registration form with on-the-fly JavaScript
                     <td><label for="patientId">Patient ID* (9 digits)</label></td>
                     <td>
                         <input type="password" id="patientId" name="patientId" 
-                               maxlength="9" required
-                               title="Enter 9 digits only. Field is obscured for privacy. Do not use real SSN."
-                               pattern="\d{9}">
+                               maxlength="11" required
+                               placeholder="000-00-0000"
+                               title="Enter 9 digits. Dashes will be added automatically as you type. Field is obscured for privacy. Do not use real SSN."
+                               pattern="\d{3}-\d{2}-\d{4}">
                         <br><span class="error" id="patientIdError"></span>
                     </td>
                 </tr>
