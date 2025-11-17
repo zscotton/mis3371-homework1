@@ -1,46 +1,65 @@
-  <!--
-  Program name: thankyou.html
-  Author: Zach Scotton
-  Date created: 2025-09-24
-  Date last edited: 2025-09-24
-  Version: 1.0
-  Description: Thank-you page for MIS3371 Homework 1
-  -->
+<!--
+Program name: thankyou.html
+Author: Zach Scotton
+Date created: 2025-09-24
+Date last edited: 2025-09-24
+Version: 1.0
+Description: Thank you page for MIS3371 Homework 1
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You — We'R'Docs Medical</title>
   <link href="style.css" rel="stylesheet">
   <script>
+    // Display today's date in the banner
     document.addEventListener('DOMContentLoaded', function() {
       var now = new Date();
-      var opts = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
-      document.getElementById('today-date').textContent = now.toLocaleDateString(undefined, opts);
+      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      var dayName = days[now.getDay()];
+      var monthName = months[now.getMonth()];
+      var date = now.getDate();
+      var year = now.getFullYear();
+      
+      // Add the st, nd, rd, th to the date
+      var suffix = 'th';
+      if (date === 1 || date === 21 || date === 31) suffix = 'st';
+      else if (date === 2 || date === 22) suffix = 'nd';
+      else if (date === 3 || date === 23) suffix = 'rd';
+      
+      document.getElementById('today-date').textContent = dayName + ', ' + monthName + ' ' + date + suffix + ', ' + year;
     });
   </script>
 </head>
 <body>
+  <!-- Banner Section -->
   <div id="banner">
-    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo" />
+    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo">
     <div class="title">We'R'Docs Medical — Patient Registration</div>
     <div class="date">today is: <span id="today-date"></span></div>
   </div>
 
+  <!-- Main Content -->
   <div class="container">
-    <h1>Thank you for your submission.</h1>
-    <p>Your registration information has been received (client-side demo).</p>
-    <p><a href="patient-form.html">Back to the form</a></p>
+    <h1>Thank You for Your Submission!</h1>
+    <p>Your registration information has been received.</p>
+    <p>We will contact you shortly to confirm your appointment.</p>
+    <p><a href="patient-form.html">← Back to Registration Form</a></p>
   </div>
 
+  <!-- Footer Section -->
   <div id="footer">
     <div><strong>We'R'Docs Medical</strong><br>PO BOX 18881 • Sugar Land, TX 77496</div>
-    <a class="contact-btn" href="mailto:info@example.com">Contact Us</a>
+    <a class="contact-btn" href="mailto:info@werdocs.com">Contact Us</a>
     <div>
       <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
-      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter/X</a>
+      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
     </div>
   </div>
 </body>
 </html>
+<!-- End of thankyou.html -->
