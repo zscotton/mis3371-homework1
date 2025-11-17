@@ -13,32 +13,6 @@ Description: Patient Registration Form for MIS3371 Homework 1
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>We'R'Docs Medical — Patient Registration</title>
   <link href="style.css" rel="stylesheet">
-  <script>
-    // Display today's date in the banner
-    document.addEventListener('DOMContentLoaded', function() {
-      var now = new Date();
-      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      
-      var dayName = days[now.getDay()];
-      var monthName = months[now.getMonth()];
-      var date = now.getDate();
-      var year = now.getFullYear();
-      
-      // Add the st, nd, rd, th to the date
-      var suffix = 'th';
-      if (date === 1 || date === 21 || date === 31) suffix = 'st';
-      else if (date === 2 || date === 22) suffix = 'nd';
-      else if (date === 3 || date === 23) suffix = 'rd';
-      
-      document.getElementById('today-date').textContent = dayName + ', ' + monthName + ' ' + date + suffix + ', ' + year;
-    });
-    
-    // Show slider value as it moves
-    function updateSlider(val) {
-      document.getElementById('slider-value').textContent = val;
-    }
-  </script>
 </head>
 <body>
   <!-- Banner Section -->
@@ -54,3 +28,211 @@ Description: Patient Registration Form for MIS3371 Homework 1
     <p><em>Please fill out all fields marked with *</em></p>
 
     <form action="thankyou.html">
+      <table>
+        <!-- Name Fields -->
+        <tr>
+          <td class="label">Name *</td>
+          <td class="input">
+            <input class="inline" type="text" name="first_name" placeholder="First Name" maxlength="30" required>
+            <input class="inline mi" type="text" name="middle_initial" placeholder="MI" maxlength="1">
+            <input class="inline" type="text" name="last_name" placeholder="Last Name" maxlength="30" required>
+          </td>
+        </tr>
+
+        <!-- Date of Birth -->
+        <tr>
+          <td class="label">Date of Birth *</td>
+          <td class="input">
+            <input type="text" name="dob" placeholder="MM/DD/YYYY" required>
+          </td>
+        </tr>
+
+        <!-- Social Security (obscured) -->
+        <tr>
+          <td class="label">Patient ID</td>
+          <td class="input">
+            <input type="password" name="ssn" placeholder="9 digits" maxlength="11">
+          </td>
+        </tr>
+
+        <!-- Address -->
+        <tr>
+          <td class="label">Address *</td>
+          <td class="input">
+            <input type="text" name="address1" placeholder="Address Line 1" maxlength="30" required>
+            <br>
+            <input type="text" name="address2" placeholder="Address Line 2 (optional)" maxlength="30" style="margin-top: 5px;">
+          </td>
+        </tr>
+
+        <!-- City, State, ZIP -->
+        <tr>
+          <td class="label">City / State / ZIP *</td>
+          <td class="input">
+            <input class="inline" type="text" name="city" placeholder="City" maxlength="30" required>
+            <select class="inline small" name="state" required>
+              <option value="">State</option>
+              <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option>
+              <option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option>
+              <option value="CT">CT</option><option value="DE">DE</option><option value="DC">DC</option>
+              <option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option>
+              <option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option>
+              <option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option>
+              <option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option>
+              <option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option>
+              <option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option>
+              <option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option>
+              <option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option>
+              <option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option>
+              <option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option>
+              <option value="PR">PR</option><option value="RI">RI</option><option value="SC">SC</option>
+              <option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option>
+              <option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option>
+              <option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option>
+              <option value="WY">WY</option>
+            </select>
+            <input class="inline small" type="text" name="zip" placeholder="ZIP" maxlength="10" required>
+          </td>
+        </tr>
+
+        <!-- Email -->
+        <tr>
+          <td class="label">Email *</td>
+          <td class="input">
+            <input type="email" name="email" placeholder="name@domain.com" required>
+          </td>
+        </tr>
+
+        <!-- Phone (optional for HW1) -->
+        <tr>
+          <td class="label">Phone</td>
+          <td class="input">
+            <input type="text" name="phone" placeholder="(###) ###-####" maxlength="14">
+          </td>
+        </tr>
+
+        <!-- Gender Radio Buttons -->
+        <tr>
+          <td class="label">Gender</td>
+          <td class="input">
+            <label><input type="radio" name="gender" value="Male"> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+            <label><input type="radio" name="gender" value="Other"> Other</label>
+          </td>
+        </tr>
+
+        <!-- Vaccinated Radio Buttons -->
+        <tr>
+          <td class="label">Vaccinated?</td>
+          <td class="input">
+            <label><input type="radio" name="vaccinated" value="Yes"> Yes</label>
+            <label><input type="radio" name="vaccinated" value="No"> No</label>
+          </td>
+        </tr>
+
+        <!-- Insurance Radio Buttons -->
+        <tr>
+          <td class="label">Insurance?</td>
+          <td class="input">
+            <label><input type="radio" name="insurance" value="Yes"> Yes</label>
+            <label><input type="radio" name="insurance" value="No"> No</label>
+          </td>
+        </tr>
+
+        <!-- Pre-existing Conditions Checkboxes -->
+        <tr>
+          <td class="label">Medical History</td>
+          <td class="input">
+            <fieldset>
+              <legend>Check all that apply</legend>
+              <label><input type="checkbox" name="conditions" value="Chickenpox"> Chickenpox</label><br>
+              <label><input type="checkbox" name="conditions" value="Measles"> Measles</label><br>
+              <label><input type="checkbox" name="conditions" value="COVID-19"> COVID-19</label><br>
+              <label><input type="checkbox" name="conditions" value="Tetanus"> Tetanus</label><br>
+              <label><input type="checkbox" name="conditions" value="Smallpox"> Smallpox</label>
+            </fieldset>
+          </td>
+        </tr>
+
+        <!-- Symptoms Text Area -->
+        <tr>
+          <td class="label">Current Symptoms</td>
+          <td class="input">
+            <textarea name="symptoms" rows="3" cols="50" placeholder="Describe any current symptoms..."></textarea>
+          </td>
+        </tr>
+
+        <!-- Health Slider -->
+        <tr>
+          <td class="label">Health Level (1-10)</td>
+          <td class="input">
+            <input type="range" name="health_score" min="1" max="10" value="5" id="healthSlider">
+            <span id="slider-value">5</span> / 10
+          </td>
+        </tr>
+
+        <!-- User ID -->
+        <tr>
+          <td class="label">User ID *</td>
+          <td class="input">
+            <input type="text" name="user_id" maxlength="20" placeholder="Choose a username" required>
+          </td>
+        </tr>
+
+        <!-- Password Fields -->
+        <tr>
+          <td class="label">Password *</td>
+          <td class="input">
+            <input class="inline" type="password" id="pwd" name="password" placeholder="Enter password" required>
+            <input class="inline" type="password" id="pwd2" name="password_confirm" placeholder="Re-enter password" required>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Form Buttons -->
+      <div class="buttons">
+        <input type="reset" value="CLEAR AND START OVER">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+
+  <!-- Footer Section -->
+  <div id="footer">
+    <div><strong>We'R'Docs Medical</strong><br>PO BOX 18881 • Sugar Land, TX 77496</div>
+    <a class="contact-btn" href="mailto:info@werdocs.com">Contact Us</a>
+    <div>
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
+      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+    </div>
+  </div>
+
+  <!-- JavaScript for date and slider -->
+  <script>
+    // Display today's date with ordinal suffix
+    document.addEventListener('DOMContentLoaded', function() {
+      var now = new Date();
+      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      var dayName = days[now.getDay()];
+      var monthName = months[now.getMonth()];
+      var date = now.getDate();
+      var year = now.getFullYear();
+      
+      var suffix = 'th';
+      if (date === 1 || date === 21 || date === 31) suffix = 'st';
+      else if (date === 2 || date === 22) suffix = 'nd';
+      else if (date === 3 || date === 23) suffix = 'rd';
+      
+      document.getElementById('today-date').textContent = dayName + ', ' + monthName + ' ' + date + suffix + ', ' + year;
+    });
+    
+    // Update slider value
+    document.getElementById('healthSlider').addEventListener('input', function() {
+      document.getElementById('slider-value').textContent = this.value;
+    });
+    
+    // Password match validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+      var password1 = document.getElementByI
