@@ -1,109 +1,221 @@
 /*
-  style.css — HW2
-  Author: Zach Scotton
-  Description: basic styles for banner, form table, buttons, and footer
+Program name: style.css
+Author: Zach Scotton
+Date created: 2025-10-15
+Date last edited: 2025-10-29
+Version: 2.0
+Description: External stylesheet for MIS3371 Homework 2 Patient Registration Form
 */
 
+/* ========== BODY & GENERAL ========== */
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #f3f7fb;
-  color: #222;
   margin: 0;
   padding: 0;
+  background-color: #f3f7fb;
+  color: #222;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
 }
 
-/* ===== Banner ===== */
-.banner {
+/* ========== BANNER ========== */
+#banner {
   background-color: #005f99;
-  color: white;
+  color: #ffffff;
+  padding: 15px 25px;
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  justify-content: flex-start;
 }
-.banner .logo {
-  width: 60px;
-  height: 60px;
+
+#banner .logo {
+  width: 70px;
+  height: 70px;
   margin-right: 15px;
 }
-.banner .title {
-  font-size: 1.3rem;
+
+#banner .title {
+  font-size: 1.4rem;
   font-weight: bold;
+  flex: 1;
 }
-.banner .date {
-  margin-left: auto;
+
+#banner .date {
   font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
-/* ===== Layout ===== */
-.container {
-  background: white;
-  margin: 20px;
-  padding: 20px;
+/* ========== MAIN LAYOUT ========== */
+.main-container {
+  max-width: 1400px;
+  margin: 20px auto;
+  display: flex;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.form-section {
+  flex: 2;
+  background: #ffffff;
+  padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+.review-panel {
+  flex: 1;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+/* ========== HEADINGS ========== */
+h1 {
+  color: #005f99;
+  font-size: 1.8rem;
+  margin-top: 0;
+  border-bottom: 3px solid #005f99;
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: #005f99;
+  font-size: 1.4rem;
+  margin-top: 0;
+}
+
+/* ========== FORM TABLE ========== */
 .form-table {
   width: 100%;
-  border-spacing: 8px;
-}
-.form-table td:first-child {
-  width: 160px;
-  font-weight: bold;
+  border-collapse: separate;
+  border-spacing: 0 10px;
 }
 
-/* ===== Inputs ===== */
-input, select, textarea {
-  width: 100%;
+.form-table td {
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  vertical-align: top;
 }
-input:focus, select:focus, textarea:focus {
+
+.form-table td.label {
+  width: 150px;
+  font-weight: 600;
+  color: #333;
+  padding-right: 15px;
+}
+
+.section-header {
+  background: linear-gradient(90deg, #005f99 0%, #0077bb 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 10px 15px !important;
+  text-align: left;
+  border-radius: 4px;
+}
+
+/* ========== FORM INPUTS ========== */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 8px 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
   border-color: #005f99;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 95, 153, 0.1);
 }
 
-/* ===== Buttons ===== */
-button, .contact-btn {
-  background-color: #005f99;
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 5px;
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ========== RADIO & CHECKBOX ========== */
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 5px;
   cursor: pointer;
-  font-weight: bold;
-}
-button:hover, .contact-btn:hover {
-  background-color: #004266;
-}
-button[type="reset"] {
-  background-color: #ccc;
-  color: #000;
 }
 
-/* ===== Review panel ===== */
-.review-panel {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 20px;
+label {
+  margin-right: 15px;
+  cursor: pointer;
+  user-select: none;
 }
 
-/* ===== Footer ===== */
-#footer {
-  background: #ffffff;
-  border-top: 1px solid #ccc;
-  padding: 15px 20px;
-  text-align: center;
-  font-size: 0.9rem;
+/* ========== RANGE SLIDER ========== */
+input[type="range"] {
+  width: 300px;
+  margin-right: 15px;
+  vertical-align: middle;
+  cursor: pointer;
 }
-#footer a {
+
+#salaryOut {
+  display: inline-block;
+  min-width: 90px;
+  font-weight: 700;
   color: #005f99;
-  text-decoration: none;
-  margin: 0 5px;
+  font-size: 1.1rem;
 }
-#footer a:hover {
-  text-decoration: underline;
+
+/* ========== ERROR MESSAGES ========== */
+.error {
+  display: inline-block;
+  color: #d32f2f;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 4px;
+  min-height: 20px;
 }
+
+.hint {
+  color: #666;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+/* ========== BUTTONS ========== */
+.btn-row {
+  text-align: right;
+  padding-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="reset"] {
+  background-color: #95a5a6;
+  color: #ffffff;
+}
+
+button[type="reset"]:hover {
+  background-color: #7f8c8d;
+}
+
+button[type="button"] {
