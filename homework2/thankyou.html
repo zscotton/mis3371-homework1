@@ -1,43 +1,68 @@
+<!--
+Program name: thankyou.html
+Author: Zach Scotton
+Date created: 2025-10-15
+Date last edited: 2025-10-29
+Version: 2.0
+Description: Thank you page for MIS3371 Homework 2
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>We'R'Docs Medical — Thank You</title>
-  <link href="style.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — We'R'Docs Medical</title>
+  <link href="style.css" rel="stylesheet">
 </head>
 <body>
   <!-- Banner -->
-  <div id="banner" class="banner">
-    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo" />
+  <div id="banner">
+    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo">
     <div class="title">We'R'Docs Medical — Patient Registration</div>
     <div class="date">today is: <span id="today-date"></span></div>
   </div>
 
-  <!-- Main message -->
-  <main style="padding: 40px; text-align: center;">
-    <h1>Thank you for your submission!</h1>
-    <p>Your information has been received.</p>
-    <p><a href="homework2.html">← Back to form</a></p>
-  </main>
+  <!-- Main Content -->
+  <div class="form-section" style="max-width: 800px; margin: 40px auto; text-align: center;">
+    <h1>Thank You for Your Submission!</h1>
+    <p style="font-size: 1.1rem; color: #555;">Your patient registration has been successfully received.</p>
+    <p style="font-size: 1rem; color: #666;">We will contact you shortly to confirm your appointment.</p>
+    <p style="margin-top: 30px;">
+      <a href="homework2.html" style="color: #005f99; font-weight: bold; text-decoration: none;">
+        ← Back to Registration Form
+      </a>
+    </p>
+  </div>
 
   <!-- Footer -->
   <div id="footer">
     <div><strong>We'R'Docs Medical</strong><br>PO BOX 18881 • Sugar Land, TX 77496</div>
-    <a class="contact-btn" href="mailto:info@example.com">Contact Us</a>
+    <a class="contact-btn" href="mailto:info@werdocs.com">Contact Us</a>
     <div>
-      <a href="https://facebook.com" target="_blank">Facebook</a> | 
-      <a href="https://twitter.com" target="_blank">Twitter/X</a>
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
+      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
     </div>
   </div>
 
-  <!-- show date as MM/DD -->
+  <!-- JavaScript for date display -->
   <script>
-    (function () {
-      const el = document.getElementById("today-date");
-      if (!el) return;
-      const s = new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
-      el.textContent = s; // e.g. 10/16
+    // Display today's date with ordinal suffix
+    (function() {
+      const now = new Date();
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      const dayName = days[now.getDay()];
+      const monthName = months[now.getMonth()];
+      const date = now.getDate();
+      const year = now.getFullYear();
+      
+      let suffix = 'th';
+      if (date === 1 || date === 21 || date === 31) suffix = 'st';
+      else if (date === 2 || date === 22) suffix = 'nd';
+      else if (date === 3 || date === 23) suffix = 'rd';
+      
+      document.getElementById('today-date').textContent = `${dayName}, ${monthName} ${date}${suffix}, ${year}`;
     })();
   </script>
 </body>
