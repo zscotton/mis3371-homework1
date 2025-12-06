@@ -1,1 +1,314 @@
+<!--
+Program name: homework4.html
+Author: Zach Scotton
+Date created: 2025-11-20
+Date last edited: 2025-11-30
+Version: 4.0
+Description: Homework 4 - Patient registration with Fetch API, iFrames, Cookies, and Local Storage
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We'R'Docs Medical — Patient Registration (HW4)</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Fixed Header -->
+  <div id="header" class="fixed-header">
+    <img class="logo" src="logo.png" alt="We'R'Docs Medical logo">
+    <div class="header-text">
+      <h1>We'R'Docs Medical</h1>
+      <p>today is: <span id="today-date"></span></p>
+      <!-- Welcome message based on cookie -->
+      <p id="welcome-msg" style="font-size: 0.9rem; margin-top: 5px;"></p>
+    </div>
+  </div>
 
+  <!-- Spacer so content doesn't hide under fixed header -->
+  <div style="height: 140px;"></div>
+
+  <!-- Main Content -->
+  <div id="content">
+    <h2>Patient Registration (Homework 4)</h2>
+    <p><em>Please fill out all required fields marked with *</em></p>
+
+    <!-- "Not you?" checkbox - only shows for returning users -->
+    <div id="not-you-section" style="display: none; margin-bottom: 15px; padding: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 5px;">
+      <label>
+        <input type="checkbox" id="not-you-checkbox">
+        <strong>Not <span id="cookie-name-display"></span>? Click here to start as a NEW USER</strong>
+      </label>
+    </div>
+
+    <form id="patientForm" action="thankyou.html" method="get" novalidate>
+      <table class="form-table">
+        <!-- ===== PERSONAL INFO ===== -->
+        <tr>
+          <th colspan="2" class="section-header">Personal Information</th>
+        </tr>
+
+        <tr>
+          <td><label for="firstName">First Name *</label></td>
+          <td>
+            <input type="text" id="firstName" name="firstName" maxlength="30" required
+                   title="1-30 characters. Letters, apostrophes, and dashes only."
+                   placeholder="First Name">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="middleInitial">Middle Initial</label></td>
+          <td>
+            <input type="text" id="middleInitial" name="middleInitial" maxlength="1"
+                   title="Optional. One letter only."
+                   placeholder="M">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="lastName">Last Name *</label></td>
+          <td>
+            <input type="text" id="lastName" name="lastName" maxlength="30" required
+                   title="1-30 characters. Letters, apostrophes, and dashes only."
+                   placeholder="Last Name">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="dob">Date of Birth *</label></td>
+          <td>
+            <input type="text" id="dob" name="dob" placeholder="MM/DD/YYYY" required
+                   title="Format: MM/DD/YYYY. Cannot be in future or more than 120 years ago.">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="patientId">Patient ID (9 digits)</label></td>
+          <td>
+            <input type="password" id="patientId" name="patientId" maxlength="11"
+                   placeholder="000-00-0000"
+                   title="9 digits. Auto-formats as you type. Field obscured for privacy.">
+          </td>
+        </tr>
+
+        <!-- ===== CONTACT INFO ===== -->
+        <tr>
+          <th colspan="2" class="section-header">Contact Information</th>
+        </tr>
+
+        <tr>
+          <td><label for="email">Email *</label></td>
+          <td>
+            <input type="email" id="email" name="email" required
+                   placeholder="name@domain.com"
+                   title="Valid email format: name@domain.com">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="phone">Phone *</label></td>
+          <td>
+            <input type="text" id="phone" name="phone" maxlength="12" required
+                   placeholder="000-000-0000"
+                   title="10 digits. Auto-formats as you type.">
+          </td>
+        </tr>
+
+        <!-- ===== ADDRESS ===== -->
+        <tr>
+          <th colspan="2" class="section-header">Address</th>
+        </tr>
+
+        <tr>
+          <td><label for="address1">Address Line 1 *</label></td>
+          <td>
+            <input type="text" id="address1" name="address1" maxlength="30" required
+                   title="Required. 2-30 characters."
+                   placeholder="Street Address">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="address2">Address Line 2</label></td>
+          <td>
+            <input type="text" id="address2" name="address2" maxlength="30"
+                   title="Optional. 2-30 characters if used."
+                   placeholder="Apt/Suite (optional)">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="city">City *</label></td>
+          <td>
+            <input type="text" id="city" name="city" maxlength="30" required
+                   title="Required. 2-30 characters."
+                   placeholder="City">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="state">State *</label></td>
+          <td>
+            <!-- This will be populated by Fetch API -->
+            <select id="state" name="state" required title="Select your state.">
+              <option value="">Loading states...</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="zip">ZIP Code *</label></td>
+          <td>
+            <input type="text" id="zip" name="zip" maxlength="5" required
+                   placeholder="00000"
+                   title="5 digits required.">
+          </td>
+        </tr>
+
+        <!-- ===== MEDICAL HISTORY ===== -->
+        <tr>
+          <th colspan="2" class="section-header">Medical History</th>
+        </tr>
+
+        <tr>
+          <td>Previous Conditions</td>
+          <td id="conditions-container">
+            <!-- This will be populated by Fetch API -->
+            Loading conditions...
+          </td>
+        </tr>
+
+        <tr>
+          <td>Gender *</td>
+          <td>
+            <label><input type="radio" name="gender" value="Male" required> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+            <label><input type="radio" name="gender" value="Other"> Other</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Vaccinated? *</td>
+          <td>
+            <label><input type="radio" name="vaccinated" value="Yes" required> Yes</label>
+            <label><input type="radio" name="vaccinated" value="No"> No</label>
+            <label><input type="radio" name="vaccinated" value="Unsure"> Unsure</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Insurance? *</td>
+          <td>
+            <label><input type="radio" name="insurance" value="Yes" required> Yes</label>
+            <label><input type="radio" name="insurance" value="No"> No</label>
+            <label><input type="radio" name="insurance" value="Unsure"> Unsure</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="salaryRange">Desired Salary</label></td>
+          <td>
+            <input type="range" id="salaryRange" name="salaryRange"
+                   min="20000" max="200000" step="5000" value="20000"
+                   title="Slide to select salary.">
+            <span id="salaryValue">$20,000</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="symptoms">Symptoms</label></td>
+          <td>
+            <textarea id="symptoms" name="symptoms" rows="4" cols="50"
+                      title="Optional. Describe symptoms."
+                      placeholder="Describe any symptoms (optional)"></textarea>
+          </td>
+        </tr>
+
+        <!-- ===== LOGIN CREDENTIALS ===== -->
+        <tr>
+          <th colspan="2" class="section-header">Create Login Credentials</th>
+        </tr>
+
+        <tr>
+          <td><label for="userId">User ID *</label></td>
+          <td>
+            <input type="text" id="userId" name="userId" maxlength="20" required
+                   title="5-20 chars. Start with letter. Letters, numbers, dash, underscore only."
+                   placeholder="username">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="password1">Password *</label></td>
+          <td>
+            <input type="password" id="password1" name="password1" maxlength="30" required
+                   title="8-30 chars. Include upper, lower, digit, and special character."
+                   placeholder="••••••••">
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="password2">Confirm Password *</label></td>
+          <td>
+            <input type="password" id="password2" name="password2" maxlength="30" required
+                   title="Must match password above."
+                   placeholder="••••••••">
+          </td>
+        </tr>
+
+        <!-- ===== REMEMBER ME ===== -->
+        <tr>
+          <td colspan="2" style="padding-top: 15px;">
+            <label style="font-weight: bold;">
+              <input type="checkbox" id="rememberMe" name="rememberMe" checked>
+              Remember me (saves your information for next visit)
+            </label>
+          </td>
+        </tr>
+
+        <!-- ===== BUTTONS ===== -->
+        <tr>
+          <td colspan="2" class="button-row">
+            <button type="reset" id="resetBtn">Clear and Start Over</button>
+            <button type="button" id="validateBtn">Validate</button>
+            <button type="submit" id="submitBtn" disabled>Submit</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <!-- ===== IFRAME SECTION ===== -->
+    <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+      <h3>Health Resources</h3>
+      <p>Learn more about patient care and wellness:</p>
+      <iframe id="health-iframe" 
+              src="https://www.cdc.gov/healthyliving/index.html" 
+              width="100%" 
+              height="400" 
+              style="border: 2px solid #ccc; border-radius: 6px;"
+              title="CDC Health Resources">
+      </iframe>
+      <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">
+        <em>This embedded content is provided by the CDC for educational purposes.</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- Fixed Footer -->
+  <div id="footer" class="fixed-footer">
+    <p><strong>We'R'Docs Medical</strong></p>
+    <p>PO BOX 18881 • Sugar Land, TX 77496</p>
+    <button onclick="window.location.href='mailto:info@werdocsmedical.com';">Contact Us</button>
+    <p>
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> |
+      <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a> |
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+    </p>
+  </div>
+
+  <script src="homework4.js"></script>
+</body>
+</html>
+<!-- End of homework4.html -->
