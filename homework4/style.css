@@ -1,0 +1,60 @@
+/*
+Program name: style.css
+Author: Zach Scotton
+Date created: 2025-11-20
+Date last edited: 2025-11-30
+Version: 4.0
+Description: Stylesheet for HW4 with fixed header and footer
+*/
+
+/* ========== BODY ========== */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e8f0f7;
+    color: #2c3e50;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding-bottom: 150px; /* Space for fixed footer */
+}
+
+/* ========== FIXED HEADER ========== */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid #ff6b35;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.fixed-header .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 5px;
+}
+
+.fixed-header .header-text {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.fixed-header .header-text h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.fixed-header .header-text p {
+    margin: 5px 0 0 0;
+    font
