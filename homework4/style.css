@@ -58,3 +58,16 @@ body {
 .fixed-header .header-text p {
     margin: 5px 0 0 0;
     font
+/* ========== FIX CENTERING ========== */
+#content {
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-table {
+    margin: 20px auto;
+    width: 100%;
+}
