@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ========== DATE DISPLAY ==========
 function setCurrentDate() {
-    const todaySpan = document.getElementById("today-date");  // ← Check this ID
+    const todaySpan = document.getElementById("currentDate");
     if (!todaySpan) return;
     
     const today = new Date();
