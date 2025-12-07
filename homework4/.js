@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ========== DATE DISPLAY ==========
 function setCurrentDate() {
-    const todaySpan = document.getElementById("currentDate");
+    const todaySpan = document.getElementById("today-date");  // ← Check this ID
     if (!todaySpan) return;
     
     const today = new Date();
@@ -34,7 +34,6 @@ function setCurrentDate() {
     const day = today.getDate();
     const year = today.getFullYear();
     
-    // Add ordinal suffix
     let suffix = "th";
     if (day === 1 || day === 21 || day === 31) suffix = "st";
     else if (day === 2 || day === 22) suffix = "nd";
