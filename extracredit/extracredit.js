@@ -987,27 +987,10 @@ function displayReviewModal() {
     finalSubmitBtn.disabled = false;
 }
 
-// ========== reCAPTCHA v3 ==========
 async function executeRecaptcha() {
-    return new Promise((resolve, reject) => {
-        if (typeof grecaptcha === 'undefined') {
-            console.warn("reCAPTCHA not loaded, skipping verification");
-            resolve("test-token"); // For development
-            return;
-        }
-        
-        grecaptcha.ready(() => {
-            grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'})
-                .then(token => {
-                    console.log("reCAPTCHA token obtained");
-                    resolve(token);
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        });
-    });
+    return "test-token";
 }
+
 
 // ========== RESET BUTTON ==========
 function attachResetButton() {
