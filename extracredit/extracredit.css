@@ -1,0 +1,772 @@
+/*
+Program name: extracredit.css
+Author: Zach Scotton
+Date created: 2025-12-01
+Date last edited: 2025-12-08
+Version: EC 1.0
+Description: Enhanced CSS with animations, custom controls, modal, responsive design
+*/
+
+/* ========== ANIMATIONS ========== */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes successPulse {
+    0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== BODY ========== */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e8f0f7;
+    color: #2c3e50;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding-bottom: 180px;
+}
+
+/* ========== PROGRESS BAR ========== */
+#progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #34495e;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#progress-bar {
+    height: 20px;
+    width: 0%;
+    background-color: #27ae60;
+    border-radius: 10px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+#progress-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* ========== FIXED HEADER ========== */
+.fixed-header {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid #ff6b35;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.fixed-header .logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 5px;
+}
+
+.fixed-header .header-text {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.fixed-header .header-text h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.fixed-header .header-text p {
+    margin: 5px 0 0 0;
+    font-size: 0.95rem;
+    color: #e0e0e0;
+}
+
+#welcome-msg {
+    font-weight: bold;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* ========== MAIN CONTENT ========== */
+#content {
+    max-width: 1000px;
+    margin: 60px auto 0;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    animation: slideIn 0.5s ease;
+}
+
+#content h2 {
+    color: #1e3c72;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #ff6b35;
+    padding-bottom: 8px;
+}
+
+#content h3 {
+    color: #2a5298;
+    font-size: 1.3rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* ========== NOT YOU SECTION ========== */
+#not-you-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 6px;
+    animation: slideIn 0.5s ease;
+}
+
+/* ========== FORM TABLE ========== */
+.form-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.form-table td {
+    padding: 12px 8px;
+    vertical-align: top;
+}
+
+.form-table td:first-child {
+    width: 200px;
+    font-weight: 600;
+    color: #34495e;
+    padding-right: 15px;
+}
+
+/* ========== COLLAPSIBLE SECTIONS ========== */
+.section-header {
+    background: linear-gradient(90deg, #2a5298 0%, #3d6bb3 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 15px !important;
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease;
+}
+
+.section-header:hover {
+    background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.section-header .toggle-icon {
+    display: inline-block;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.collapsible-content {
+    display: table-row-group;
+}
+
+/* ========== INPUT WITH ICON ========== */
+.input-with-icon {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 400px;
+}
+
+.validation-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.toggle-password:hover {
+    opacity: 0.7;
+}
+
+/* ========== FORM INPUTS ========== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 40px 10px 12px;
+    border: 2px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2a5298;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    padding-right: 12px;
+}
+
+select {
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+input[readonly],
+select[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+/* ========== ERROR MESSAGES ========== */
+.error-message {
+    display: block;
+    color: #e74c3c;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+/* ========== PASSWORD STRENGTH INDICATOR ========== */
+.password-strength {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.strength-item {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    color: #e74c3c;
+    transition: color 0.3s ease;
+}
+
+.strength-icon {
+    display: inline-block;
+    width: 20px;
+    font-weight: bold;
+}
+
+/* ========== CAPS LOCK WARNING ========== */
+#caps-warning {
+    animation: shake 0.5s;
+}
+
+/* ========== CUSTOM CHECKBOXES ========== */
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkbox-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #cbd5e0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.custom-checkbox:hover .checkbox-custom {
+    border-color: #2a5298;
+}
+
+.custom-checkbox input[type="checkbox"]:checked ~ .checkbox-custom {
+    background-color: #2a5298;
+    border-color: #2a5298;
+}
+
+.checkbox-custom:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox input[type="checkbox"]:checked ~ .checkbox-custom:after {
+    display: block;
+}
+
+/* ========== CUSTOM RADIO BUTTONS ========== */
+.custom-radio {
+    display: inline-block;
+    position: relative;
+    padding-left: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #cbd5e0;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.custom-radio:hover .radio-custom {
+    border-color: #2a5298;
+}
+
+.custom-radio input[type="radio"]:checked ~ .radio-custom {
+    background-color: #fff;
+    border-color: #2a5298;
+}
+
+.radio-custom:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2a5298;
+}
+
+.custom-radio input[type="radio"]:checked ~ .radio-custom:after {
+    display: block;
+}
+
+/* ========== TOGGLE SWITCHES ========== */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+    margin-right: 10px;
+}
+
+.toggle-switch input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 28px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+    background-color: #27ae60;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider:before {
+    transform: translateX(32px);
+}
+
+.toggle-label {
+    margin-left: 10px;
+    vertical-align: super;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ========== RANGE SLIDER ========== */
+input[type="range"] {
+    width: 300px;
+    margin-right: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#salaryValue {
+    display: inline-block;
+    min-width: 90px;
+    font-weight: 700;
+    color: #2a5298;
+    font-size: 1.1rem;
+}
+
+/* ========== BUTTONS ========== */
+.button-row {
+    text-align: right;
+    padding-top: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="reset"] {
+    background-color: #95a5a6;
+    color: #ffffff;
+}
+
+button[type="reset"]:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#submitBtn {
+    background-color: #27ae60;
+    color: #ffffff;
+}
+
+#submitBtn:hover {
+    background-color: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ========== MODAL ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border: none;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    color: #1e3c72;
+    margin-top: 0;
+    border-bottom: 3px solid #ff6b35;
+    padding-bottom: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+.review-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.review-section:last-of-type {
+    border-bottom: none;
+}
+
+.review-section h3 {
+    color: #2a5298;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.review-section p {
+    margin: 8px 0;
+    color: #34495e;
+}
+
+.modal-buttons {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#goBackBtn {
+    background-color: #95a5a6;
+    color: white;
+}
+
+#goBackBtn:hover {
+    background-color: #7f8c8d;
+}
+
+#finalSubmitBtn {
+    background-color: #27ae60;
+    color: white;
+}
+
+#finalSubmitBtn:hover {
+    background-color: #229954;
+}
+
+#finalSubmitBtn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ========== FIXED FOOTER ========== */
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: #ecf0f1;
+    padding: 15px 40px;
+    text-align: center;
+    border-top: 4px solid #ff6b35;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
+
+.fixed-footer p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.fixed-footer button {
+    background-color: #ff6b35;
+    color: #ffffff;
+    padding: 8px 16px;
+    margin: 5px 0;
+}
+
+.fixed-footer button:hover {
+    background-color: #e55a28;
+}
+
+.fixed-footer a {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+.fixed-footer a:visited {
+    color: #9b59b6;
+}
+
+.fixed-footer a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* ========== IFRAME ========== */
+iframe {
+    border: 2px solid #ccc;
+    border-radius: 6px;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    .fixed-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px 15px;
+    }
+    
+    .fixed-header .logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .fixed-header .header-text {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    #content {
+        padding: 20px 15px;
+        margin-top: 40px;
+    }
+    
+    .form-table td:first-child {
+        width: auto;
+        display: block;
+        padding-bottom: 5px;
+    }
+    
+    .form-table td {
+        display: block;
+        width: 100%;
+    }
+    
+    input[type="range"] {
+        width: 200px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    body {
+        padding-bottom: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    #progress-text {
+        font-size: 0.8rem;
+    }
+    
+    .fixed-header .header-text h1 {
+        font-size: 1.2rem;
+    }
+    
+    button {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+}
